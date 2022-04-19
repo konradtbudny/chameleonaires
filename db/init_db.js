@@ -5,7 +5,9 @@ const {
 } = require("./client");
 const {createProduct}=require('./models/products')
 const{createUser}=require('./models/users')
-const {createReview}=require('./models/reviews')
+const {createReview}=require('./models/reviews');
+const models = require("./models");
+const { createOrderItem } = require("./models");
 
 async function buildTables() {
   try {
@@ -22,14 +24,6 @@ async function buildTables() {
     `);
     console.log("Finished dropping tables!");
     // build tables in correct order
-  } catch (error) {
-    console.log("Error dropping tables");
-    throw error;
-  }
-}
-
-async function populateInitialData() {
-  try {
     console.log("Starting to build tables...");
     await client.query(`CREATE TABLE users(
           id SERIAL PRIMARY KEY,
@@ -66,12 +60,22 @@ async function populateInitialData() {
         )`)
         
         console.log("Finished creating tables!");
-        // create useful starting data by leveraging your
+      } catch (error) {
+        console.log("Error dropping tables");
+        throw error;
+      }
+    }
+    
+    async function populateInitialData() {
+      try {
+    // create useful starting data by leveraging your
         // Model.method() adapters to seed your db, for example:
         // const user1 = await User.createUser({ ...user info goes here... })
-        //const user1=await User.createUser({});
-        //const products1=await products.createProduct({})
-        //const review1= await reviews.createReview({})
+        //const user1=await models.createUser({});
+        //const products1=await createProduct({})
+        //const review1= await createReview({})
+        //const order1=await createOrder({})
+        //const orderItem1=await createOrderItem({})
   } catch (error) {
     throw error;
   }
