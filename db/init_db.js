@@ -2,7 +2,10 @@ const {
   client,
   // declare your model imports here
   // for example, User
-} = require("./");
+} = require("./client");
+const {createProduct}=require('./models/products')
+const{createUser}=require('./models/users')
+const {createReview}=require('./models/reviews')
 
 async function buildTables() {
   try {
@@ -61,12 +64,14 @@ async function populateInitialData() {
           price INTEGER REFERENCES products(price),
           quantity INTEGER
         )`)
-        //const user1=await User.createUser();
-
-    console.log("Finished creating tables!");
-    // create useful starting data by leveraging your
-    // Model.method() adapters to seed your db, for example:
-    // const user1 = await User.createUser({ ...user info goes here... })
+        
+        console.log("Finished creating tables!");
+        // create useful starting data by leveraging your
+        // Model.method() adapters to seed your db, for example:
+        // const user1 = await User.createUser({ ...user info goes here... })
+        //const user1=await User.createUser({});
+        //const products1=await products.createProduct({})
+        //const review1= await reviews.createReview({})
   } catch (error) {
     throw error;
   }
