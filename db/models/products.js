@@ -1,13 +1,6 @@
 // grab our db client connection to use with our adapters
 const client = require("../client");
 
-module.exports = {
-  // add your database adapter fns here
-  createProduct,
-  updateProduct,
-  destroyProduct,
-  getAlLProducts,
-};
 async function createProduct({
   title,
   description,
@@ -24,9 +17,9 @@ async function createProduct({
         VALUES($1,$2,$3,$4,$5,$6)
         ON CONFLICT (name) DO NOTHING
         RETURNING *;`,
-      [title, description, price, inventoryQuantity, category, photo]
-    );
-    return product;
+        [title, description, price, inventoryQuantity, category, photo]
+        );
+        return product;
   } catch (error) {
     throw error;
   }
@@ -65,8 +58,8 @@ async function updateProduct({
     description = description ? description : temp.description;
     price = price ? price : temp.price;
     inventoryQuantity = inventoryQuantity
-      ? inventoryQuantity
-      : temp.inventoryQuantity;
+    ? inventoryQuantity
+    : temp.inventoryQuantity;
     category = category ? category : temp.category;
     photo = photo ? photo : temp.photo;
     const {
@@ -79,9 +72,9 @@ async function updateProduct({
         RETURNING *
         `,
       [title, description, price, inventoryQuantity, category, photo, id]
-    );
-    return product;
-  } catch (error) {
+      );
+      return product;
+    } catch (error) {
     throw error;
   }
 }
@@ -91,9 +84,9 @@ async function destroyProduct(id) {
       rows: [deleted],
     } = await client.query(
       `
-        DELETE FROM products
-        WHERE id=$1
-        RETURNING *;`,
+      DELETE FROM products
+      WHERE id=$1
+      RETURNING *;`,
       [id]
     );
     return deleted;
@@ -101,3 +94,12 @@ async function destroyProduct(id) {
     throw error;
   }
 }
+
+module.exports = {
+  // add your database adapter fns here
+  createProduct,
+  updateProduct,
+  destroyProduct,
+  getAlLProducts,
+  getProductById
+};
