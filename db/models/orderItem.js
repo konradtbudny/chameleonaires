@@ -31,6 +31,7 @@ async function createOrderItem(orderId, productId, price, quantity) {
     `,
       [orderId, productId, price, quantity]
     );
+    return orderItem;
   } catch (error) {
     throw error;
   }

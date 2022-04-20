@@ -80,6 +80,7 @@ async function updateProduct({
         `,
       [title, description, price, inventoryQuantity, category, photo, id]
     );
+    return product;
   } catch (error) {
     throw error;
   }
