@@ -112,7 +112,20 @@ async function getReviewsByUserId(userId) {
     throw error;
   }
 }
-//async function attachReviewsToProducts() {}
+// async function attachReviewsToProducts(products) {
+//   const productsToReturn=[...products];
+//   const binds =products.map((_,index)=>`$${index+1}`).join(", ")
+//   const productIds=products.map((product)=>product.id);
+//   if(!productIds?.length) return[];
+//   try {
+//     const {rows:reviews}=await client.query(`
+//     SELECT reviews.*, user.username
+//     FROM reviews
+//     JOIN products `)
+//   } catch (error) {
+//     throw error;
+//   }
+// }
 //async function attachReviewsToUsers() {}
 module.exports = {
   createReviews,
