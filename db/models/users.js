@@ -1,16 +1,7 @@
-// grab our db client connection to use with our adapters
 const client = require("../client");
 const bcrypt = require("bcrypt");
 
-module.exports = {
-  // add your database adapter fns here
-  getAllUsers,
-  createUser,
-  getUser,
-};
-
 async function getAllUsers() {
-  /* this adapter should fetch a list of users from your db */
   try {
     const {
       rows: [user],
@@ -91,5 +82,10 @@ async function getUser({ username, password }) {
     throw error;
   }
 }
-
-//getUser
+module.exports = {
+  getAllUsers,
+  createUser,
+  getUserByUsername,
+  getUserById,
+  getUser,
+};

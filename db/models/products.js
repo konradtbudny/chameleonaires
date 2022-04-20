@@ -1,4 +1,3 @@
-// grab our db client connection to use with our adapters
 const client = require("../client");
 
 async function createProduct({
@@ -17,9 +16,9 @@ async function createProduct({
         VALUES($1,$2,$3,$4,$5,$6)
         ON CONFLICT (name) DO NOTHING
         RETURNING *;`,
-        [title, description, price, inventoryQuantity, category, photo]
-        );
-        return product;
+      [title, description, price, inventoryQuantity, category, photo]
+    );
+    return product;
   } catch (error) {
     throw error;
   }
@@ -33,11 +32,11 @@ async function getAlLProducts() {
     throw error;
   }
 }
-async function getProductById(productId) {
+async function getProductById(id) {
   try {
     const {
       rows: [product],
-    } = await client.query(`SELECT * FROM products WHERE id=$1`, [productId]);
+    } = await client.query(`SELECT * FROM products WHERE id=$1`, [id]);
     return product;
   } catch (error) {
     throw error;
@@ -58,8 +57,8 @@ async function updateProduct({
     description = description ? description : temp.description;
     price = price ? price : temp.price;
     inventoryQuantity = inventoryQuantity
-    ? inventoryQuantity
-    : temp.inventoryQuantity;
+      ? inventoryQuantity
+      : temp.inventoryQuantity;
     category = category ? category : temp.category;
     photo = photo ? photo : temp.photo;
     const {
@@ -67,18 +66,18 @@ async function updateProduct({
     } = await client.query(
       `
         UPDATE products
-        SET title=($1), description=($2), price=($3), inventoryQuantity=($4),category=($5),photo=($6)
-        WHERE id=($7)
+        SET title=$1, description=$2, price=$3, inventoryQuantity=$4,category=$5,photo=$6
+        WHERE id=$7
         RETURNING *
         `,
       [title, description, price, inventoryQuantity, category, photo, id]
-      );
-      return product;
-    } catch (error) {
+    );
+    return product;
+  } catch (error) {
     throw error;
   }
 }
-async function destroyProduct(id) {
+async function deleteProduct(id) {
   try {
     const {
       rows: [deleted],
@@ -96,10 +95,9 @@ async function destroyProduct(id) {
 }
 
 module.exports = {
-  // add your database adapter fns here
   createProduct,
   updateProduct,
-  destroyProduct,
+  deleteProduct,
   getAlLProducts,
-  getProductById
+  getProductById,
 };
