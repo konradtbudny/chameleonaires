@@ -2,10 +2,8 @@ const apiRouter = require("express").Router();
 const usersRouter = require("./users");
 const productsRouter = require("./products");
 const ordersRouter = require("./orders");
-const postsRouter = require("./posts");
-const jwt = require("jsonwebtoken");
-const { getUserById } = require("../db");
-const { JWT_SECRET } = process.env;
+const reviewsRouter = require("./reviews");
+const { append } = require('express/lib/response');
 
 apiRouter.get("/", (req, res, next) => {
   res.send({
@@ -47,8 +45,5 @@ apiRouter.use((req, res, next) => {
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/products", productsRouter);
 apiRouter.use("/orders", ordersRouter);
-apiRouter.use("/posts", postsRouter);
-apiRouter.use((error, req, res, next) => {
-  res.send({ name: error.name, message: error.message });
-});
+apiRouter.use("/reviews", reviewsRouter);
 module.exports = apiRouter;
