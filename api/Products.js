@@ -27,3 +27,4 @@ productsRouter.post("/", async (req, res, next) => {
     next(error);
   }
 });
+module.exports = productsRouter;
