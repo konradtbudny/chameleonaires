@@ -3,7 +3,7 @@ const postsRouter = express.Router();
 const { getAllPosts, createPost, updatePost, getPostById } = require("../db");
 const { requireUser, requireActiveUser } = require("./utils");
 
-postsRouter.post("/", requireUser, requireActiveUser, async (req, res, next) => {
+postsRouter.post("/", requireUser, async (req, res, next) => {
   const { title, content, tags = "" } = req.body;
   let postData = {};
 
@@ -50,7 +50,7 @@ postsRouter.get("/", async (req, res) => {
 });
 
 
-postsRouter.delete("/:postId", requireUser, requireActiveUser, async (req, res, next) => {
+postsRouter.delete("/:postId", requireUser, async (req, res, next) => {
     try {
       const post = await getPostById(req.params.postId);
   
