@@ -1,6 +1,7 @@
 const express = require("express");
 const usersRouter = express.Router();
-const { getAllUsers, getUserByUsername, createUser, getUser, getUserById } = require("../db");
+const { getAllUsers, getUserByUsername, createUser, getUserById } = require("../db");
+const { requireUser } = require("./utils");
 const jwt = require("jsonwebtoken");
 
 usersRouter.use((req, res, next) => {
@@ -90,7 +91,7 @@ usersRouter.post('/register', async (req, res, next) => {
     }
 });
 
-usersRouter.delete("/:userId", requireUser, requireActiveUser, async (req, res, next) => {
+usersRouter.delete("/:userId", requireUser, async (req, res, next) => {
 
     try {
         const user = await getUserById(req.params.userId);
