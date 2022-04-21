@@ -8,6 +8,7 @@ const
   getOrdersByBuyer,
   getOrdersByProduct,
   getOrdersbyId,} = require("../db");
+  const {requireUser}=require('./utils')
 
 ordersRouter.get("/", async (req, res) => {
     try {
