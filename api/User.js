@@ -1,7 +1,6 @@
 const express = require("express");
 const usersRouter = express.Router();
-const { getAllUsers, getUserByUsername, createUser, updateUser, getUserById } = require("../db");
-const { requireUser, requireActiveUser } = require("./utils");
+const { getAllUsers, getUserByUsername, createUser, getUser, getUserById } = require("../db");
 const jwt = require("jsonwebtoken");
 
 usersRouter.use((req, res, next) => {
@@ -57,7 +56,7 @@ usersRouter.post("/login", async (req, res, next) => {
 });
 
 usersRouter.post('/register', async (req, res, next) => {
-    const { username, password, name, location } = req.body;
+    const { username, password, email } = req.body;
 
     try {
         const _user = await getUserByUsername(username);
@@ -72,8 +71,7 @@ usersRouter.post('/register', async (req, res, next) => {
         const user = await createUser({
             username,
             password,
-            name,
-            location,
+            email,
         });
 
         const token = jwt.sign({

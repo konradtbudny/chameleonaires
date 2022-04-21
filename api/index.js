@@ -2,7 +2,8 @@ const apiRouter = require('express').Router();
 const usersRouter = require("./users");
 const productsRouter = require("./products");
 const ordersRouter = require("./orders");
-const postsRouter = require("./posts");
+const reviewsRouter = require("./reviews");
+const { append } = require('express/lib/response');
 
 
 apiRouter.get('/', (req, res, next) => {
@@ -21,5 +22,5 @@ apiRouter.get('/health', (req, res, next) => {
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/products", productsRouter);
 apiRouter.use("/orders", ordersRouter);
-apiRouter.use("/posts", postsRouter);
+apiRouter.use("/reviews", reviewsRouter);
 module.exports = apiRouter;
