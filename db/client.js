@@ -2,7 +2,7 @@
 const { Client } = require('pg');
 
 // change the DB_NAME string to whatever your group decides on
-const DB_NAME = 'univ-boilerplate';
+const DB_NAME = 'template1';
 
 const DB_URL =
   process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
@@ -23,4 +23,4 @@ if (process.env.CI) {
   client = new Client(DB_URL);
 }
 
-module.exports = client;
+module.exports = {client};
