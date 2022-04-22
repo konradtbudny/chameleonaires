@@ -8,6 +8,8 @@ import "../style/App.css";
 import Home from "./Home";
 import Navbar from "./Navbar";
 import Login from "./Login"
+import Products from "./Products"
+import Register from "./Register"
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
@@ -37,7 +39,13 @@ const App = () => {
           <Login/>
         </Route>
         <Route exact path='/home'>
-
+          <Home/>
+        </Route>
+        <Route exact path='/products'>
+          <Products/>
+        </Route>
+        <Route exact path='/register'>
+          <Register/>
         </Route>
       </Switch>
     </div>
