@@ -1,11 +1,10 @@
-import {Api}
-const Home = () => {
-
-    return(
-        <div className="app-container">
+import React, { useEffect, useState } from "react";
+const Home = ({ APIHealth }) => {
+  return (
+    <div className="app-container">
       <h1>Hello, World!</h1>
       <p>API Status: {APIHealth}</p>
-    
-    </div>)
+    </div>
+  );
 };
 export default Home;
