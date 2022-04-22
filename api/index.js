@@ -2,7 +2,7 @@ const apiRouter = require('express').Router();
 const usersRouter = require("./User");
 const productsRouter = require("./Products");
 const ordersRouter = require("./Orders");
-const postsRouter = require("./Posts");
+const reviewsRouter = require("./reviews");
 
 const jwt = require("jsonwebtoken");
 const { getUserById } = require("../db");
@@ -51,5 +51,5 @@ apiRouter.use((error, req, res, next) => {
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/products", productsRouter);
 apiRouter.use("/orders", ordersRouter);
-apiRouter.use("/posts", postsRouter);
+apiRouter.use("/reviews", reviewsRouter);
 module.exports = apiRouter;

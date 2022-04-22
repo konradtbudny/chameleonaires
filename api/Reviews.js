@@ -1,6 +1,6 @@
 const express = require("express");
 const reviewsRouter = express.Router();
-const { createReviews, updateReviews, deleteReviews, getReviewsById, getAllReviews, getReviewsByProductId, getReviewsByUserId,} = require("../db");
+const { createReviews, updateReviews, getReviewsById, getAllReviews, getReviewsByProductId,} = require("../db");
 
 
 reviewsRouter.post("/", requireUser, async (req, res, next) => {
