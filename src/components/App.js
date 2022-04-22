@@ -30,11 +30,14 @@ const App = () => {
     <div className="app-container">
       <Navbar />
       <Switch>
-        <Route path="/">
+        <Route exact path="/">
           <Home APIHealth={APIHealth} />
         </Route>
-        <Route path='./users/Login'>
+        <Route exact path='/login'>
           <Login/>
+        </Route>
+        <Route exact path='/home'>
+
         </Route>
       </Switch>
     </div>
