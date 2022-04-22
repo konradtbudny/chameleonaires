@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React from 'react'
 const Product=()=>{
     return(<div>
@@ -6,12 +5,3 @@ const Product=()=>{
     </div>)
 }
 export default Product;
-=======
-import React from "react";
-
-const Products = () => {
-  return {};
-};
-
-export default Products;
->>>>>>> 49f24b617a693142fde16817ee26989ccaf1e7df
