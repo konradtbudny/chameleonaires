@@ -1,14 +1,12 @@
 const express = require("express");
 const ordersRouter = express.Router();
 const
- {createOrders,
-  updateOrders,
-  deleteOrders,
+ { 
   getAllOrders,
-  getOrdersByBuyer,
-  getOrdersByProduct,
-  getOrdersbyId,} = require("../db");
+  getOrdersbyId,} = require("./db/models/orders");
 
+
+ 
 ordersRouter.get("/", async (req, res) => {
     try {
       const allOrders = await getAllOrders();
@@ -24,6 +22,9 @@ ordersRouter.get("/", async (req, res) => {
       next({ name, message });
     }
   });
+
+
+ ;
 
 
   ordersRouter.delete("/:orderId", requireUser, async (req, res, next) => {
