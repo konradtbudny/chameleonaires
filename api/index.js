@@ -1,4 +1,4 @@
-const apiRouter = require('express').Router();
+const apiRouter = require("express").Router();
 const usersRouter = require("./Users");
 const productsRouter = require("./Products");
 const ordersRouter = require("./Orders");
@@ -48,6 +48,7 @@ apiRouter.use((req, res, next) => {
 apiRouter.use((error, req, res, next) => {
   res.send({ name: error.name, message: error.message });
 });
+
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/products", productsRouter);
 apiRouter.use("/orders", ordersRouter);

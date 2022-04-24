@@ -3,9 +3,9 @@ const {
   // declare your model imports here
   // for example, User
 } = require("./client");
-const {createProduct}=require('./models/products')
-const{createUser}=require('./models/users')
-const {createReview}=require('./models/reviews');
+const { createProduct } = require("./models/products");
+const { createUser } = require("./models/users");
+const { createReview } = require("./models/reviews");
 const models = require("./models");
 const { createOrderItem } = require("./models");
 
@@ -51,31 +51,31 @@ async function buildTables() {
           "buyersId" INTEGER REFFERENCES users(id),
           "productId" INTEGER REFERENCES products(id),
         `);
-        await client.query(`CREATE TABLE order_item(
+    await client.query(`CREATE TABLE order_item(
           id SERIAL PRIMARY KEY,
           "orderId" INTEGER REFERENCES orders(id),
           "productId" INTEGER REFERENCES products(id),
           price INTEGER REFERENCES products(price),
           quantity INTEGER
-        )`)
-        
-        console.log("Finished creating tables!");
-      } catch (error) {
-        console.log("Error dropping tables");
-        throw error;
-      }
-    }
-    
-    async function populateInitialData() {
-      try {
+        )`);
+
+    console.log("Finished creating tables!");
+  } catch (error) {
+    console.log("Error dropping tables");
+    throw error;
+  }
+}
+
+async function populateInitialData() {
+  try {
     // create useful starting data by leveraging your
-        // Model.method() adapters to seed your db, for example:
-        // const user1 = await User.createUser({ ...user info goes here... })
-        //const user1=await models.createUser({});
-        //const products1=await createProduct({})
-        //const review1= await createReview({})
-        //const order1=await createOrder({})
-        //const orderItem1=await createOrderItem({})
+    // Model.method() adapters to seed your db, for example:
+    // const user1 = await User.createUser({ ...user info goes here... })
+    //const user1=await models.createUser({});
+    //const products1=await createProduct({})
+    //const review1= await createReview({})
+    //const order1=await createOrder({})
+    //const orderItem1=await createOrderItem({})
   } catch (error) {
     throw error;
   }
