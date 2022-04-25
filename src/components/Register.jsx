@@ -75,13 +75,14 @@ import { registerUser } from "../axios-services";
 const Register = ({ setToken }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email,setEmail]=useState("")
 
   return (
     <div>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          const result = await registerUser(username, password);
+          const result = await registerUser(username, password,email);
           console.log(result);
 
           localStorage.setItem("token", result.data.token);
@@ -102,6 +103,15 @@ const Register = ({ setToken }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></input>
+        <input
+          type="text"
+          placeholder="E-mail"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        ></input>
+
+
+
         {/* <input
           type="text"
           placeholder="Verify Password"

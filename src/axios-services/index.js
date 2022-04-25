@@ -83,7 +83,7 @@ export async function loginUser(username, password) {
   }
 }
 
-export async function registerUser(username, password) {
+export async function registerUser(username, password,email) {
   console.log( username+" "+ password +" in axios");
 
   try {
@@ -97,6 +97,7 @@ export async function registerUser(username, password) {
       body: JSON.stringify({
         username,
         password,
+        email
       }),
     });
     console.log("I am at axios")
@@ -105,6 +106,21 @@ export async function registerUser(username, password) {
     console.log("11111111111111111111111111",data)
     return data;
   } catch (error) {
-    throw error;
+    console.error( error);
+  }
+}
+export async function getMe(token) {
+
+  try {
+    const response = await fetch(`/api/users/me`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.token}`
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error( error);
   }
 }

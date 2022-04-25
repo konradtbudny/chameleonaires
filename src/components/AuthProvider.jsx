@@ -1,6 +1,6 @@
-import AuthContext from "../AuthContext";
-import { useState, useEffect } from "react";
-import {getUser} from "../../api/Users"
+import AuthContext from "./AuthContext";
+import React, { useState, useEffect } from "react";
+import { getMe } from "../axios-services";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     async function getUser() {
       if (localStorage.getItem("token")) {
-        const newUser = await me(localStorage.getItem("token"));
+        const newUser = await getMe(localStorage.getItem("token"));
         console.log(newUser);
         setUser(newUser);
       } else {

@@ -48,7 +48,7 @@ async function buildTables() {
         )`);
     await client.query(`CREATE TABLE orders(
           id SERIAL PRIMARY KEY,
-          "buyersId" INTEGER REFFERENCES users(id),
+          "buyersId" INTEGER REFERENCES users(id),
           "productId" INTEGER REFERENCES products(id),
         `);
     await client.query(`CREATE TABLE order_item(
