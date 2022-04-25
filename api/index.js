@@ -2,7 +2,7 @@ const apiRouter = require("express").Router();
 const usersRouter = require("./Users");
 const productsRouter = require("./Products");
 const ordersRouter = require("./Orders");
-const reviewsRouter = require("./reviews");
+const reviewsRouter = require("./Reviews");
 
 const jwt = require("jsonwebtoken");
 const { getUserById } = require("../db");
