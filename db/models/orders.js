@@ -8,7 +8,7 @@ async function createOrders({ buyersId, productId }) {
     } = await client.query(
       `
     INSERT INT orders("buyersId", "productId")
-    VAULES($1,$2)
+    VALUES($1,$2)
     RETURNING *;
     `,
       [buyersId, productId]
