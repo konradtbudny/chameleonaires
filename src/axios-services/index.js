@@ -65,7 +65,7 @@ export async function getAPIHealth() {
 export async function loginUser(username, password) {
   try {
     // Post request to login route
-    const response = await axios.get(`users/login`, {
+    const response = await axios.get(`/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +86,7 @@ export async function loginUser(username, password) {
 export async function registerUser(username, password) {
   try {
     // Post request to API to add user
-    const response = await axios.get(`users/register`, {
+    const response = await axios.get(`/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
