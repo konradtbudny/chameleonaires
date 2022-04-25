@@ -16,7 +16,7 @@ const Login = ({
 
   return (
     <div className="registration-page">
-      <h2>Welcome Back to FitnessTrac.kr</h2>
+      <h2>Welcome Back to the Chameleonaires' Reptile Shop!</h2>
       <div className="form-container">
         <form
           onSubmit={async (e) => {
