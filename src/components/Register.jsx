@@ -81,7 +81,6 @@ const Register = ({ setToken }) => {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          console.log({ username, password });
           const result = await registerUser(username, password);
           console.log(result);
 
