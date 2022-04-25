@@ -1,7 +1,9 @@
 import React from "react";
-
 const Reviews = () => {
-  return {};
+  return (
+    <div>
+      <p>Hiya</p>
+    </div>
+  );
 };
-
 export default Reviews;
