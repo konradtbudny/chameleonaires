@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { loginUser } from "../axios-services";
+import { loginUser } from "../axios-services/index";
 
 const Login = ({
   setUser,
