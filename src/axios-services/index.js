@@ -95,9 +95,9 @@ export async function registerUser(username, password,email) {
       },
       // Sending username and password object in the req.body
       body: JSON.stringify({
-        username,
-        password,
-        email
+        username:username,
+        password:password,
+        email:email
       }),
     });
     console.log("I am at axios")
