@@ -11,7 +11,7 @@ const { createOrderItem } = require("./models");
 
 async function buildTables() {
   try {
-    client.connect();
+    //client.connect();
 
     // drop tables in correct order
     console.log("Dropping All Tables...");
@@ -33,7 +33,7 @@ async function buildTables() {
         );`);
     await client.query(`CREATE TABLE reviews(
           id SERIAL PRIMARY KEY,
-          "productId" INTEGER REFFERENCES products(id),
+          "productId" INTEGER REFERENCES products(id),
           "userId" INTEGER REFERENCES users(id),
           description varchar(255) NOT NULL
         );`);
@@ -71,17 +71,29 @@ async function populateInitialData() {
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
-    //const user1=await models.createUser({});
-    //const products1=await createProduct({})
-    //const review1= await createReview({})
-    //const order1=await createOrder({})
-    //const orderItem1=await createOrderItem({})
+    const user1=await models.createUser({username:"Konrad", password:"Budny",email:"kbudny492@gmail.com"})
+    const products1=await models.createProduct({title:"Turtle", description:"A small animal with a shell",category:"Testudines",inventoryQuantity:2,photo:"https://upload.wikimedia.org/wikipedia/commons/2/21/Turtle_diversity.jpg",price:32})
+    const review1= await models.createReview({productsId:products1.id,userId:user1.id,description:"A very nice small animal"})
+    const order1=await models.createOrder({buyersId:user1.id,productId:products1.id})
+    const orderItem1=await models.createOrderItem({orderId:order1.id,productId:products1.id,price:32,quantity:1})
   } catch (error) {
     throw error;
   }
 }
-
-buildTables()
-  .then(populateInitialData)
-  .catch(console.error)
-  .finally(() => client.end());
+console.log("init_db")
+try {
+  client.connect();
+  buildTables()
+  console.log("tables built")
+  populateInitialData()
+  console.log("Data populated")
+} catch (error) {
+  console.error(error)
+}
+finally{
+  client.end();
+}
+// buildTables()
+//   .then(populateInitialData)
+//   .catch(console.error)
+//   .finally(() => client.end());
