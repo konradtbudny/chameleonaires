@@ -3,6 +3,7 @@ const usersRouter = express.Router();
 const { getAllUsers, getUserByUsername, createUser, getUserById } = require("../db");
 const { requireUser } = require("./utils");
 const jwt = require("jsonwebtoken");
+const {setToken}=require('')
 
 usersRouter.use((req, res, next) => {
     console.log("A request is being made to /users");
@@ -69,12 +70,12 @@ usersRouter.post('/register', async (req, res, next) => {
                 //     });
                 // }
                 
+                console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 const user = await createUser({
                     username,
                     password,
                     email
                 });
-                console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         console.log(user+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
         const token = jwt.sign({
@@ -83,6 +84,7 @@ usersRouter.post('/register', async (req, res, next) => {
         }, process.env.JWT_SECRET, {
             expiresIn: '1w'
         });
+        //localStorage.setItem("token",token)
         setToken(token)
 
         res.send({
