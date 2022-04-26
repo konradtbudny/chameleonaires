@@ -1,9 +1,8 @@
 const express = require("express");
 const usersRouter = express.Router();
-const { getAllUsers, getUserByUsername, createUser, getUserById } = require("../db");
-const { requireUser } = require("./utils");
+const {getAllUsers, getUserByUsername, createUser, getUserById} = require("../db");
+const {requireUser} = require("./utils");
 const jwt = require("jsonwebtoken");
-const {setToken}=require('')
 
 usersRouter.use((req, res, next) => {
     console.log("A request is being made to /users");
@@ -14,42 +13,30 @@ usersRouter.use((req, res, next) => {
 usersRouter.get("/", async (req, res) => {
     const users = await getAllUsers();
 
-    res.send({ users });
+    res.send({users});
 });
 
 usersRouter.post("/login", async (req, res, next) => {
-    const { username, password } = req.body;
+    const {username, password} = req.body;
 
     // request must have both
     if (!username || !password) {
-        next({
-            name: "MissingCredentialsError",
-            message: "Please supply both a username and password"
-        });
+        next({name: "MissingCredentialsError", message: "Please supply both a username and password"});
     }
 
     try {
         const user = await getUserByUsername(username);
 
         if (user && user.password == password) {
-            const token = jwt.sign(
-                {
-                    id: user.id,
-                    username: username
-                },
-                process.env.JWT_SECRET
-            );
+            const token = jwt.sign({
+                id: user.id,
+                username: username
+            }, process.env.JWT_SECRET);
 
             // create token & return to user
-            res.send({
-                message: "you're logged in!",
-                key: token
-            });
+            res.send({message: "you're logged in!", key: token});
         } else {
-            next({
-                name: "IncorrectCredentialsError",
-                message: "Username or password is incorrect"
-            });
+            next({name: "IncorrectCredentialsError", message: "Username or password is incorrect"});
         }
     } catch (error) {
         console.log(error);
@@ -58,41 +45,33 @@ usersRouter.post("/login", async (req, res, next) => {
 });
 
 usersRouter.post('/register', async (req, res, next) => {
-    const { username, password, email } = req.body;
+    const {username, password, email} = req.body;
     try {
         // const _user = await getUserByUsername(username);
-        
+
         // console.log("REACHING api",_user)
         // if (_user) {
-            //     next({
-                //         name: 'UserExistsError',
-                //         message: 'A user by that username already exists'
-                //     });
-                // }
-                
-                console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                const user = await createUser({
-                    username,
-                    password,
-                    email
-                });
-        console.log(user+"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        //     next({
+        //         name: 'UserExistsError',
+        //         message: 'A user by that username already exists'
+        //     });
+        // }
 
+        const user = await createUser({username, password, email});
+        console.log(user, "api")
+        console.log("getting token", user.id)
         const token = jwt.sign({
             id: user.id,
             username
-        }, process.env.JWT_SECRET, {
-            expiresIn: '1w'
-        });
-        //localStorage.setItem("token",token)
-        setToken(token)
+        }, process.env.JWT_SECRET, {expiresIn: "1w"});
+        console.log("jwt signed in")
+        console.log(token, "token in api")
+        // localStorage.setItem("token",token)
+        // setToken(token)
 
-        res.send({
-            message: "thank you for signing up",
-            token
-        });
-    } catch ({ name, message }) {
-        next({ name, message })
+        res.send({message: "thank you for signing up", token});
+    } catch ({name, message}) {
+        next({name, message})
     }
 });
 
@@ -102,25 +81,20 @@ usersRouter.delete("/:userId", requireUser, async (req, res, next) => {
         const user = await getUserById(req.params.userId);
 
         if (user && user.id === req.user.id) {
-            const deactivatedUser = await updateUser(user.id, { active: false });
+            const deactivatedUser = await updateUser(user.id, {active: false});
 
-            res.send({ user: deactivatedUser });
-        } else {
-            // if there is a user logged in, throw UnauthorizedUserError, otherwise throw UserNotFoundError
-            next(
-                post
-                    ? {
-                        name: "UnauthorizedUserError",
-                        message: "You cannot delete a user which is not yours",
-                    }
-                    : {
-                        name: "UserNotFoundError",
-                        message: "That user does not exist",
-                    }
-            );
+            res.send({user: deactivatedUser});
+        } else { // if there is a user logged in, throw UnauthorizedUserError, otherwise throw UserNotFoundError
+            next(post ? {
+                name: "UnauthorizedUserError",
+                message: "You cannot delete a user which is not yours"
+            } : {
+                name: "UserNotFoundError",
+                message: "That user does not exist"
+            });
         }
-    } catch ({ name, message }) {
-        next({ name, message });
+    } catch ({name, message}) {
+        next({name, message});
     }
 });
 
@@ -130,25 +104,20 @@ usersRouter.patch("/:userId", requireUser, async (req, res, next) => {
         const user = await getUserById(req.params.userId);
 
         if (user && user.id === req.user.id) {
-            const reactivatedUser = await updateUser(user.id, { active: true });
+            const reactivatedUser = await updateUser(user.id, {active: true});
 
-            res.send({ user: reactivatedUser });
-        } else {
-            // if there is a user logged in, throw UnauthorizedUserError, otherwise throw UserNotFoundError
-            next(
-                post
-                    ? {
-                        name: "UnauthorizedUserError",
-                        message: "You cannot reactivate a user which is not yours",
-                    }
-                    : {
-                        name: "UserNotFoundError",
-                        message: "That user does not exist",
-                    }
-            );
+            res.send({user: reactivatedUser});
+        } else { // if there is a user logged in, throw UnauthorizedUserError, otherwise throw UserNotFoundError
+            next(post ? {
+                name: "UnauthorizedUserError",
+                message: "You cannot reactivate a user which is not yours"
+            } : {
+                name: "UserNotFoundError",
+                message: "That user does not exist"
+            });
         }
-    } catch ({ name, message }) {
-        next({ name, message });
+    } catch ({name, message}) {
+        next({name, message});
     }
 });
 

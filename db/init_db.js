@@ -7,7 +7,7 @@ const {createProduct} = require("./models/products");
 const {createUser} = require("./models/users");
 const {createReview} = require("./models/reviews");
 const {createOrders}=require("./models/orders")
-const models = require("./models");
+//const models = require("./models");
 const {createOrderItem} = require("./models");
 
 async function buildTables() {
@@ -17,11 +17,11 @@ async function buildTables() {
         // drop tables in correct order
         console.log("Dropping All Tables...");
         await client.query(`
-    DROP TABLE IF EXISTS order_item;
-    DROP TABLE IF EXISTS orders;
-    DROP TABLE IF EXISTS reviews;
-    DROP TABLE IF EXISTS products;
-    DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS orderItem;
+    DROP TABLE IF EXISTS orders CASCADE;
+    DROP TABLE IF EXISTS reviews CASCADE;
+    DROP TABLE IF EXISTS products CASCADE;
+    DROP TABLE IF EXISTS users CASCADE;
     `);
         console.log("Finished dropping tables!");
         // build tables in correct order
@@ -55,18 +55,15 @@ async function buildTables() {
           "buyersId" INTEGER REFERENCES users(id),
           "productId" INTEGER REFERENCES products(id)
         )`);
-        console.log("orders table created");
-        await client.query(`CREATE TABLE order_item(
+        await client.query(`CREATE TABLE orderItem(
           id SERIAL PRIMARY KEY,
           "orderId" INTEGER REFERENCES orders(id),
           "productId" INTEGER REFERENCES products(id),
-          
+          price INTEGER,
           quantity INTEGER,
           UNIQUE ("orderId","productId")
         )`);
-        console.log("order_item table created");
 
-        console.log("Finished creating tables!");
     } catch (error) {
         console.log("Error dropping tables");
         throw error;
@@ -79,7 +76,7 @@ async function populateInitialData() {
         // Model.method() adapters to seed your db, for example:
         // const user1 = await User.createUser({ ...user info goes here... })
         const user1 = await createUser({username: "Konrad", password: "Budny", email: "kbudny492@gmail.com"})
-        const products1 = await models.createProduct({
+        const products1 = await createProduct({
             title: "Turtle",
             description: "A small animal with a shell",
             category: "Testudines",
@@ -87,11 +84,9 @@ async function populateInitialData() {
             photo: "https://upload.wikimedia.org/wikipedia/commons/2/21/Turtle_diversity.jpg",
             price: 32
         })
-        console.log(products1.id,"product1 before reviews")
-        const review1 = await models.createReview({productId: products1.id, userId: user1.id, description: "A very nice small animal"})
-        console.log(user1.id+" "+ products1.id+"orders")
-        const order1 = await models.createOrders({buyersId: user1.id, productId: products1.id})
-        const orderItem1 = await models.createOrderItem({orderId: order1.id, productId: products1.id, price: 32, quantity: 1})
+        const review1 = await createReview({productId: products1.id, userId: user1.id, description: "A very nice small animal"})
+        const order1 = await createOrders({buyersId: user1.id, productId: products1.id})
+        const orderItem1 = await createOrderItem({orderId: order1.id, productId: products1.id, price: products1.price, quantity: 1})
     } catch (error) {
         throw error;
     }

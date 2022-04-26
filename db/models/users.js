@@ -1,7 +1,6 @@
 const {client} = require("../client");
 const bcrypt = require("bcrypt");
 //const { rows } = require("pg/lib/defaults");
-console.log(client,"client in db")
 async function getAllUsers() {
   try {
     const {
@@ -25,7 +24,6 @@ async function createUser({ username, password, email }) {
       ON CONFLICT (username) DO NOTHING
       RETURNING *;
       `,[username, password, email]);
-      console.log("User created in the database!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     delete user.hashedPassword;
     delete user.password;
     return user;

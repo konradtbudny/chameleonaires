@@ -84,9 +84,9 @@ export async function loginUser(username, password) {
 }
 
 export async function registerUser(username, password,email) {
-  console.log( username+" "+ password +" in axios");
 
   try {
+    console.log(username+" "+password+" "+email+"axio")
     // Post request to API to add user
     const response = await fetch(`/api/users/register`, {
       method: "POST",
@@ -100,10 +100,9 @@ export async function registerUser(username, password,email) {
         email:email
       }),
     });
-    console.log("I am at axios")
+    console.log(response,"axio")
     // Parsing the returned json object
     const data = await response.json();
-    console.log("11111111111111111111111111",data)
     return data;
   } catch (error) {
     console.error( error);

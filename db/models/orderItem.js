@@ -2,7 +2,7 @@ const {client} = require("../client");
 
 async function getOrderItemById(id) {
   try {
-    const { row } = await client.query(`SELECT * FROM order_item WHERE id=$1`, [
+    const { row } = await client.query(`SELECT * FROM orderItem WHERE id=$1`, [
       id,
     ]);
     return row;
@@ -10,13 +10,13 @@ async function getOrderItemById(id) {
     throw error;
   }
 }
-async function createOrderItem(orderId, productId, price, quantity) {
+async function createOrderItem({orderId, productId, price, quantity}) {
   try {
     const {
       rows: [orderItem],
     } = await client.query(
       `
-    INSERT INTO order_item("orderId","productId", price,quantity)
+    INSERT INTO orderItem("orderId","productId", price,quantity)
     VALUES($1,$2,$3,$4)
     ON CONFLICT ("orderId", "productId") DO NOTHING
     RETURNING *
@@ -35,7 +35,7 @@ async function updateOrderItem({ id, price, quantity }) {
     quantity = quantity ? quantity : temp.quantity;
     const { row } = await client.query(
       `
-    UPDATE order_item
+    UPDATE orderItem
     SET price=$1, quantity=$2
     WHERE id=$3`,
       [price, quantity, id]
@@ -51,7 +51,7 @@ async function deleteOrderItem(id) {
       row: [deleted],
     } = await client.query(
       `
-    DELETE FROM order_item
+    DELETE FROM orderItem
     WHERE id=$1`,
       [id]
     );
