@@ -1,34 +1,18 @@
 const {client} = require("../client");
 const {getProductById} = require("./products");
 
-// async function createOrders({buyersId, productId}) {
-//   console.log(buyersId+" "+ productId+ " getting into orders")
-//     try {
-//         const {row: [order]} = await client.query(`
-//     INSERT INTO orders("buyersId", "productId")
-//     VALUES($1,$2)
-//     RETURNING *;
-//     `, [buyersId, productId]);
-//     console.log(order)
-//         return order;
-//     } catch (error) {
-//         throw error;
-//     }
-// }
 async function createOrders({ buyersId, productId }) {
   try {
-    const {row: [order]} = await client.query(`
+    const {rows: [newOrder]} = await client.query(`
       INSERT INTO orders("buyersId", "productId")
       VALUES($1,$2)
       RETURNING *;
       `,[buyersId, productId]);
-    return order;
+    return newOrder;
   } catch (error) {
     throw error;
   }
 }
-
-
 
 
 async function updateOrders({id, buyersId, productId}) {

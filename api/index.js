@@ -7,6 +7,7 @@ const reviewsRouter = require("./Reviews");
 const jwt = require("jsonwebtoken");
 const { getUserById } = require("../db");
 const { JWT_SECRET } = process.env;
+const {client}=require("../db/client")
 
 apiRouter.get("/", (req, res, next) => {
   res.send({

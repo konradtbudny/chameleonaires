@@ -21,7 +21,6 @@ async function createProduct({
             category,
             photo
         ]);
-        console.log(product, "product in db")
         return product;
     } catch (error) {
         throw error;
