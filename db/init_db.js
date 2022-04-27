@@ -6,14 +6,12 @@ const {
 const {createProduct} = require("./models/products");
 const {createUser} = require("./models/users");
 const {createReview} = require("./models/reviews");
-const {createOrders}=require("./models/orders")
-//const models = require("./models");
+const {createOrders} = require("./models/orders")
 const {createOrderItem} = require("./models");
 
 async function buildTables() {
     try {
         // client.connect();
-
         // drop tables in correct order
         console.log("Dropping All Tables...");
         await client.query(`
@@ -25,14 +23,12 @@ async function buildTables() {
     `);
         console.log("Finished dropping tables!");
         // build tables in correct order
-        console.log("Starting to build tables...");
         await client.query(`CREATE TABLE users(
           id SERIAL PRIMARY KEY,
           username varchar(255) UNIQUE NOT NULL,
           password varchar(255) NOT NULL,
           email varchar(255) NOT NULL
         );`);
-        console.log("users table created");
         await client.query(`CREATE TABLE products(
           id SERIAL PRIMARY KEY,
           title varchar(255) UNIQUE NOT NULL,
@@ -42,14 +38,12 @@ async function buildTables() {
           category varchar(255) NOT NULL,
           photo varchar(255)
         )`);
-        console.log("products table created");
         await client.query(`CREATE TABLE reviews(
           id SERIAL PRIMARY KEY,
           "productId" INTEGER REFERENCES products(id),
           "userId" INTEGER REFERENCES users(id),
           description varchar(255) NOT NULL
         );`);
-        console.log("reviews table created");
         await client.query(`CREATE TABLE orders(
           id SERIAL PRIMARY KEY,
           "buyersId" INTEGER REFERENCES users(id),
@@ -103,8 +97,4 @@ async function rebuildTables() {
     }
 
 }
-rebuildTables().finally(()=>client.end())
-// buildTables()
-// .then(populateInitialData)
-// .catch(console.error)
-// .finally(() => client.end());
+rebuildTables(). finally(() => client.end())

@@ -26,6 +26,7 @@ async function createProduct({
         throw error;
     }
 }
+
 async function getAlLProducts() {
     try {
         const {rows} = await client.query(`
@@ -35,6 +36,7 @@ async function getAlLProducts() {
         throw error;
     }
 }
+
 async function getProductById(id) {
     try {
         const {rows: [product]} = await client.query(`SELECT * FROM products WHERE id=$1`, [id]);
@@ -43,6 +45,7 @@ async function getProductById(id) {
         throw error;
     }
 }
+
 async function updateProduct({
     id,
     title,
@@ -79,6 +82,7 @@ async function updateProduct({
         throw error;
     }
 }
+
 async function deleteProduct(id) {
     try {
         const {rows: [deleted]} = await client.query(`

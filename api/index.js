@@ -61,9 +61,6 @@ apiRouter.use((error, req, res, next) => {
         res.status(statusCode);
      else 
         res.status(500);
-    
-
-    // res.status(500)
     res.send({name: error.name, message: error.message});
 });
 
