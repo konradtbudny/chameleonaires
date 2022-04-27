@@ -70,12 +70,14 @@
 
 // export default Register;
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { registerUser } from "../axios-services";
 
 const Register = ({ setToken }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email,setEmail]=useState("")
+  let history=useHistory()
 
   return (
     <div>
@@ -87,6 +89,8 @@ const Register = ({ setToken }) => {
           //localStorage.setItem("token", result.token);
          // const myToken = localStorage.getItem("token");
         //  setToken(myToken);
+        history.push("/")
+        alert("registered")
         }}
       >
         <input
