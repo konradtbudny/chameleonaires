@@ -1,19 +1,18 @@
 const {client} = require("../client");
 const {getProductById} = require("./products");
 
-async function createOrders({ buyersId, productId }) {
-  try {
-    const {rows: [newOrder]} = await client.query(`
+async function createOrders({buyersId, productId}) {
+    try {
+        const {rows: [newOrder]} = await client.query(`
       INSERT INTO orders("buyersId", "productId")
       VALUES($1,$2)
       RETURNING *;
-      `,[buyersId, productId]);
-    return newOrder;
-  } catch (error) {
-    throw error;
-  }
+      `, [buyersId, productId]);
+        return newOrder;
+    } catch (error) {
+        throw error;
+    }
 }
-
 
 async function updateOrders({id, buyersId, productId}) {
     try {
@@ -31,6 +30,7 @@ async function updateOrders({id, buyersId, productId}) {
         throw error;
     }
 }
+
 async function deleteOrders(id) {
     try {
         const {rows: [deleted]} = await client.query(`
@@ -43,6 +43,7 @@ async function deleteOrders(id) {
         throw error;
     }
 }
+
 async function getAllOrders() {
     try {
         const {rows} = await client.query(`
@@ -53,6 +54,7 @@ async function getAllOrders() {
         throw error;
     }
 }
+
 async function getOrdersByBuyer(buyersId) {
     try {
         const {rows: [buyerOrderS]} = await client.query(`
@@ -64,6 +66,7 @@ async function getOrdersByBuyer(buyersId) {
         throw error;
     }
 }
+
 async function getOrdersByProduct(productId) {
     try {
         const {rows: [productOrders]} = await client.query(`
@@ -75,6 +78,7 @@ async function getOrdersByProduct(productId) {
         throw error;
     }
 }
+
 async function getOrdersbyId(id) {
     try {
         const {rows: [order]} = await client.query(`
@@ -86,6 +90,7 @@ async function getOrdersbyId(id) {
         throw error;
     }
 }
+
 module.exports = {
     createOrders,
     updateOrders,
