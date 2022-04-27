@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const baseURL="http://localhost:3000/api"
 // this file holds your frontend network request adapters
 // think about each function as a service that provides data
 // to your React UI through AJAX calls
@@ -20,10 +20,10 @@ import axios from "axios";
 
 export async function getAPIHealth() {
   try {
-    const { data } = await axios.get("/api/health"); // can use fwtch
+    const { data } = await axios.get(`${baseURL}/health`); // can use fwtch
     return data;
   } catch (err) {
-    console.error(err);
+    console.log(err,"checking object");
     return { healthy: false };
   }
 }
@@ -65,7 +65,7 @@ export async function getAPIHealth() {
 export async function loginUser(username, password) {
   try {
     // Post request to login route
-    const response = await axios.get(`/users/login`, {
+    const response = await axios.get(`${baseURL}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +88,7 @@ export async function registerUser(username, password,email) {
   try {
     console.log(username+" "+password+" "+email+"axio")
     // Post request to API to add user
-    const response = await fetch(`/api/users/register`, {
+    const response = await fetch(`${baseURL}/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -100,12 +100,12 @@ export async function registerUser(username, password,email) {
         email:email
       }),
     });
-    console.log(response,"axio")
     // Parsing the returned json object
     const data = await response.json();
+    console.log(data,"axio")
     return data;
   } catch (error) {
-    console.error( error);
+    console.log(error,"checking object");
   }
 }
 export async function getMe(token) {
@@ -120,6 +120,6 @@ export async function getMe(token) {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error( error);
+    console.log(error,"checking object2");
   }
 }

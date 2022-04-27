@@ -1,4 +1,6 @@
 const apiRouter = require("express").Router();
+require('dotenv').config()
+
 const usersRouter = require("./Users");
 const productsRouter = require("./Products");
 const ordersRouter = require("./Orders");

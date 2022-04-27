@@ -16,6 +16,7 @@ async function getAllUsers() {
 }
 async function createUser({ username, password, email }) {
   try {
+    console.log(username+" "+password+" "+email)
     const SALT_COUNT = 10;
     const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
     const {rows: [user]} = await client.query(`
@@ -26,6 +27,7 @@ async function createUser({ username, password, email }) {
       `,[username, password, email]);
     delete user.hashedPassword;
     delete user.password;
+    console.log(user,"user from db")
     return user;
   } catch (error) {
     throw error;

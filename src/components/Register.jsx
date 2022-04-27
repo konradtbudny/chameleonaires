@@ -83,9 +83,10 @@ const Register = ({ setToken }) => {
         onSubmit={async (e) => {
           e.preventDefault();
           const result = await registerUser(username, password,email);
-          localStorage.setItem("token", result.data.token);
-          const myToken = localStorage.getItem("token");
-          setToken(myToken);
+          console.log(result,"frontend")
+          //localStorage.setItem("token", result.token);
+         // const myToken = localStorage.getItem("token");
+        //  setToken(myToken);
         }}
       >
         <input
