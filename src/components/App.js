@@ -11,7 +11,10 @@ import Login from "./Login"
 import Products from "./Products"
 import Register from "./Register"
 
+import useAuth from '../hooks/useAuth'
+
 const App = () => {
+  const {isLoggedIn,setIsLoggedIn}=useAuth()
   const [APIHealth, setAPIHealth] = useState("");
 
   useEffect(() => {
@@ -30,7 +33,7 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}/>
       <Switch>
         <Route exact path="/">
           <Home APIHealth={APIHealth} />
