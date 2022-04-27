@@ -3,6 +3,9 @@ const usersRouter = express.Router();
 const {getAllUsers, getUserByUsername, createUser, getUserById} = require("../db");
 const {requireUser} = require("./utils");
 const jwt = require("jsonwebtoken");
+const {JWT_SECRET} = process.env;
+require("dotenv").config()
+
 
 usersRouter.use((req, res, next) => {
     console.log("A request is being made to /users");
@@ -10,11 +13,11 @@ usersRouter.use((req, res, next) => {
     next();
 });
 
-usersRouter.get("/", async (req, res) => {
-    const users = await getAllUsers();
+// usersRouter.get("/", async (req, res) => {
+//     const users = await getAllUsers();
 
-    res.send({users});
-});
+//     res.send({users});
+// });
 
 usersRouter.post("/login", async (req, res, next) => {
     const {username, password} = req.body;
@@ -34,12 +37,12 @@ usersRouter.post("/login", async (req, res, next) => {
             }, process.env.JWT_SECRET);
 
             // create token & return to user
-            res.send({message: "you're logged in!", key: token});
+            //res.send({message: "you're logged in!", token: token});
         } else {
             next({name: "IncorrectCredentialsError", message: "Username or password is incorrect"});
         }
     } catch (error) {
-        console.log(error);
+        console.log(error, "error in login");
         next(error);
     }
 });
@@ -47,29 +50,31 @@ usersRouter.post("/login", async (req, res, next) => {
 usersRouter.post('/register', async (req, res, next) => {
     const {username, password, email} = req.body;
     try {
-        // const _user = await getUserByUsername(username);
+        const _user = await getUserByUsername(username);
 
-        // console.log("REACHING api",_user)
-        // if (_user) {
-        //     next({
-        //         name: 'UserExistsError',
-        //         message: 'A user by that username already exists'
-        //     });
-        // }
+        console.log("REACHING api", _user)
+        if (_user) {
+            next({name: 'UserExistsError', message: 'A user by that username already exists'});
+        } else {
 
-        const user = await createUser({username, password, email});
-        console.log(user, "api")
-        console.log("getting token", user.id)
-        const token = jwt.sign({
-            id: user.id,
-            username
-        }, process.env.JWT_SECRET, {expiresIn: "1w"});
-        console.log("jwt signed in")
-        console.log(token, "token in api")
-        // localStorage.setItem("token",token)
-        // setToken(token)
+            console.log(username + " " + password + " " + email + " register user")
+            const user = await createUser({username, password, email});
 
-        res.send({message: "thank you for signing up", token});
+            if (user) {
+                console.log(user, "user in backend")
+                console.log(JWT_SECRET, "trying to get jwt secret")
+                const token = jwt.sign({
+                    id: user.id
+                }, JWT_SECRET, {expiresIn: "1w"});
+                console.log("jwt signed in")
+                console.log(token, "token in api")
+                console.log(typeof token)
+                res.send({user, message: "you're signed up!",token});
+
+            } else {
+                next({name: 'UserCreationError', message: 'There was a problem registering you. Please try again.'});
+            }
+        }
     } catch ({name, message}) {
         next({name, message})
     }
