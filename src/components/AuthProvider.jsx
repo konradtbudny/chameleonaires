@@ -8,12 +8,13 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     async function getUser() {
-      if (localStorage.getItem("token")) {
-        const newUser = await getMe(localStorage.getItem("token"));
+      const token=localStorage.getItem("token");
+      if (token) {
+        //check getMe parameter
+        const newUser = await getMe(token);
         setUser(newUser);
-      } else {
-        setUser({});
-      }
+        setToken(token);
+      } 
     }
     getUser();
   }, [token]);

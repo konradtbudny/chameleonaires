@@ -63,14 +63,13 @@ usersRouter.post('/register', async (req, res, next) => {
             if (user) {
                 console.log(user, "user in backend")
                 console.log(JWT_SECRET, "trying to get jwt secret")
-                // const token = jwt.sign({
-                //     id: user.id
-                // }, JWT_SECRET, {expiresIn: "1w"});
-                // console.log("jwt signed in")
-                // console.log(token, "token in api")
-                // console.log(typeof token)
-                //                res.send(token)
-                res.send({user, message: "you're signed up!"});
+                const token = jwt.sign({
+                    id: user.id
+                }, JWT_SECRET, {expiresIn: "1w"});
+                console.log("jwt signed in")
+                console.log(token, "token in api")
+                console.log(typeof token)
+                res.send({user, message: "you're signed up!",token});
 
             } else {
                 next({name: 'UserCreationError', message: 'There was a problem registering you. Please try again.'});
