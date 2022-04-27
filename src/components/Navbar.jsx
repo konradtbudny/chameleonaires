@@ -1,23 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const Navbar = () => {
+const Navbar = ({isLoggedIn}) => {
   return (
     <div>
-      <div>
-        <h1>Chameleonaires</h1>
-      </div>
-      <li>
-        <Link to="/home">Home</Link>
-      </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-      <li>
-        <Link to="/register">Register</Link>
-      </li>
-      <li>
-        <Link to="/products">Products</Link>
-      </li>
+      
+       <Link to="/home"></Link>
+        <button>Home</button>
+     
+        <Link to="/login"></Link>
+        <button>Login</button>
+      
+        <Link to="/register"></Link>
+        <button>Register</button>
+      
+        <Link to="/products"></Link>
+        <button>Products</button>
+      
+      {isLoggedIn ? (
+          <Link to="/orders">
+            <button>My Orders</button>
+          </Link>
+        ) : null}
     </div>
   );
 };
