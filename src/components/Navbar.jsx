@@ -4,18 +4,18 @@ const Navbar = ({isLoggedIn}) => {
   return (
     <div>
       
-       <Link to="/home"></Link>
+       <Link to="/home">
         <button>Home</button>
-     
-        <Link to="/login"></Link>
+        </Link>
+        <Link to="/login">
         <button>Login</button>
-      
-        <Link to="/register"></Link>
+        </Link>
+        <Link to="/register">
         <button>Register</button>
-      
-        <Link to="/products"></Link>
+        </Link>
+        <Link to="/products">
         <button>Products</button>
-      
+        </Link>
       {isLoggedIn ? (
           <Link to="/orders">
             <button>My Orders</button>
