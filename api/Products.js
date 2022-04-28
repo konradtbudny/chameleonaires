@@ -5,7 +5,6 @@ const productsRouter = express.Router();
 productsRouter.get("/", async (req, res, next) => {
     try {
         const products = await getAlLProducts();
-        console.log(products,"api")
         res.send(products);
     } catch (error) {
         next(error);

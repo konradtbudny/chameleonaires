@@ -14,9 +14,7 @@ const AuthProvider = ({ children }) => {
       const token=localStorage.getItem("token");
       if (token) {
         //check getMe parameter
-        console.log(localStorage.username)
         const newUser = await getMe(localStorage.username);
-        console.log(newUser)
         setUser(newUser);
         setToken(token);
         setIsLoggedIn(true)
@@ -24,22 +22,27 @@ const AuthProvider = ({ children }) => {
     }
     getUser();
   }, [token]);
+
   useEffect(()=>{
     const fetchProducts=async ()=>{
       const importedProducts=await getProducts();
-      console.log(importedProducts, "Authprovider")
       setProducts(importedProducts)
     }
     fetchProducts()
   },[])
+  
   useEffect(()=>{
     const fetchOrders=async ()=>{
-      const importedOrders=await getOrders();
-      setOrders(importedOrders.allOrders)
+      console.log(user,"user inauthprovider!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+      if(user.id){
+        const importedOrders=await getOrders(user.id);
+        setOrders(importedOrders)
+
+      }
     }
     fetchOrders();
-  },{})
-console.log(typeof orders[1],"orders after useeffect")
+  },[user])
+console.log(orders,"authprovider")
   return (
     <AuthContext.Provider value={{ user, setUser, token, setToken,isLoggedIn,setIsLoggedIn,products,orders}}>
       {children}

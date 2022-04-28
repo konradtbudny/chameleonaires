@@ -46,7 +46,6 @@ async function deleteOrders(id) {
 
 async function getAllOrders() {
     try {
-        console.log("getAllOrders")
         const {rows} = await client.query(`
     SELECT * FROM orders;
     `);
@@ -62,6 +61,7 @@ async function getOrdersByBuyer(buyersId) {
     SELECT * FROM orders
     WHERE "buyersId"=$1
     `, [buyersId]);
+    console.log(buyersId)
         return buyerOrderS;
     } catch (error) {
         throw error;

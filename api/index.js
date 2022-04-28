@@ -57,6 +57,8 @@ apiRouter.use("/products", productsRouter);
 apiRouter.use("/orders", ordersRouter);
 apiRouter.use("/reviews", reviewsRouter);
 apiRouter.use((error, req, res, next) => {
+    console.log(error, "error about status code")
+    const {statusCode} =error
     if (statusCode >= 100 && statusCode < 600) 
         res.status(statusCode);
      else 

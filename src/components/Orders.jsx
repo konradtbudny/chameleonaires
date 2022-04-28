@@ -1,11 +1,15 @@
 import React from "react";
-const Orders = ({orders,user}) => {
-  console.log(orders[0],"!!!!!!!!!!!!!!!!!!!!!?????????????????????AAAAAAAAAAAAAAAAAAAAA")
-  console.log(user)
+import useAuth from '../hooks/useAuth'
+const Orders = () => {
+const {orders}=useAuth();
+
+
+
+  console.log(orders,"front end")
   return (
     <div>
 
-      <p>Orders {orders[0].id}</p>
+      <p>Orders</p>
     </div>
   );
 };

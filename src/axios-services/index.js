@@ -22,7 +22,6 @@ export async function loginUser(username, password) {
                 {username, password}
             )
         });
-        console.log(response)
         const data = await response.json();
 
         return data;
@@ -50,7 +49,6 @@ export async function registerUser(username, password, email) {
 }
 
 export async function getMe(username) {
-console.log(username)
     try {
         const response = await fetch(`/api/users/me`, {
             method:"post",
@@ -67,7 +65,6 @@ console.log(username)
         const data = await response.json();
         return data;
     } catch (error) {
-        console.log(error, "checking object2");
     }
 }
 export async function getProducts(){
@@ -82,18 +79,15 @@ export async function getProducts(){
         console.log(error)
     }
 }
-export async function getOrders(){
+export async function getOrders(id){
     try {
-        console.log("axios orders")
-        const response=await fetch(`/api/orders`,{
-            method:'POST',
-            body:JSON.stringify({
-            })
+        console.log(id,"axios user")
+        const response=await fetch(`/api/orders/${id}`,{
+            method:'GET',
+            
         })
-
-        console.log("axios orders response",response)
         const data=await response.json();
-        console.log("axios orders data",data)
+        console.log(data,"axciios")
         return data;
     } catch (error) {
         console.log(error)

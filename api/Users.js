@@ -20,7 +20,6 @@ usersRouter.post("/login", async (req, res, next) => {
     
     try {
         const user = await getUserByUsername(username);
-        console.log(user)
 
         if (user && user.password == password) {
             const token = jwt.sign({
