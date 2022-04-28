@@ -4,9 +4,9 @@ import AuthContext from '../components/AuthContext'
 // const context = useContext(AuthContext)
 
 const useAuth = () => {
-    const {user, setUser, token, setToken,isLoggedIn, setIsLoggedIn,products} = useContext(AuthContext)
+    const {user, setUser, token, setToken,isLoggedIn, setIsLoggedIn,products,orders} = useContext(AuthContext)
 
-    return {user, setUser, token, setToken,isLoggedIn,setIsLoggedIn,products}
+    return {user, setUser, token, setToken,isLoggedIn,setIsLoggedIn,products,orders}
 }
 
 export default useAuth

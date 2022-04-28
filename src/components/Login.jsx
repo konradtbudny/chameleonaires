@@ -13,6 +13,7 @@ const Login = ({ setToken,setIsLoggedIn }) => {
           e.preventDefault();
           const result = await loginUser(username, password);
           localStorage.setItem("token",result.token)
+          localStorage.setItem("username",username)
           setIsLoggedIn(true)
           history.push("/")
         }}

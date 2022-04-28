@@ -108,5 +108,8 @@ usersRouter.patch("/:userId", requireUser, async (req, res, next) => {
         next({name, message});
     }
 });
-
+usersRouter.post("/me",requireUser,async(req,res,next)=>{
+    const user=await getUserByUsername(req.body.username);
+    res.send(user)
+})
 module.exports = usersRouter;

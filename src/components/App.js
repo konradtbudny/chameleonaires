@@ -10,11 +10,12 @@ import Navbar from "./Navbar";
 import Login from "./Login"
 import Products from "./Products"
 import Register from "./Register"
+import Orders from "./Orders";
 
 import useAuth from '../hooks/useAuth'
 
 const App = () => {
-  const {isLoggedIn,setIsLoggedIn,products}=useAuth()
+  const {user,isLoggedIn,setIsLoggedIn,products,orders}=useAuth()
   const [APIHealth, setAPIHealth] = useState("");
 
   useEffect(() => {
@@ -30,6 +31,7 @@ const App = () => {
     // invoke it immediately after its declaration, inside the useEffect callback
     getAPIStatus();
   }, []);
+  console.log(user)
 
   return (
     <div className="app-container">
@@ -49,6 +51,9 @@ const App = () => {
         </Route>
         <Route exact path='/register'>
           <Register setIsLoggedIn={setIsLoggedIn}/>
+        </Route>
+        <Route exact path='/orders'>
+          <Orders orders={orders} user={user}/>
         </Route>
       </Switch>
     </div>

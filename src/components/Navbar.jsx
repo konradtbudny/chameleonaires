@@ -34,6 +34,11 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           <button>My Orders</button>
         </Link>
       ) : null}
+      {isLoggedIn?(
+        <Link to="/cart">
+          <button>Cart</button>
+        </Link>
+      ):null}
     </div>
   );
 };

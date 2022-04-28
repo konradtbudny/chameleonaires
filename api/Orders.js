@@ -1,17 +1,20 @@
 const express = require("express");
 const ordersRouter = express.Router();
-const {getAllOrders, getOrdersbyId} = require("../db");
+const {getAllOrders, getOrdersbyId,getUserByUsername} = require("../db");
 const {requireUser} = require("./utils");
 
-ordersRouter.get("/", async (req, res) => {
+ordersRouter.post("/", async (req, res,next) => {
     try {
+        console.log("getting to orders")
         const allOrders = await getAllOrders();
-
+        console.log(allOrders,"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        /*const user=await getUserByUsername(localStorage.user.username)
+        console.log(user)
         const orders = allOrders.filter((order) => {
             return((order.active && order.author.active) || (req.user && order.id === req.user.id));
         });
-
-        res.send({orders});
+*/
+        res.send({allOrders});
     } catch ({name, message}) {
         next({name, message});
     }

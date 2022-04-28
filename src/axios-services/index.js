@@ -49,16 +49,20 @@ export async function registerUser(username, password, email) {
     }
 }
 
-export async function getMe(token) {
-
+export async function getMe(username) {
+console.log(username)
     try {
         const response = await fetch(`/api/users/me`, {
+            method:"post",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${
                     localStorage.token
                 }`
-            }
+            },
+            body: JSON.stringify({
+                username
+            })
         });
         const data = await response.json();
         return data;
@@ -73,8 +77,24 @@ export async function getProducts(){
         });
 
         const data=await response.json();
-        console.log(data, "axios")
         return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+export async function getOrders(){
+    try {
+        console.log("axios orders")
+        const response=await fetch(`/api/orders`,{
+            method:'POST',
+            body:JSON.stringify({
+            })
+        })
+
+        console.log("axios orders response",response)
+        const data=await response.json();
+        console.log("axios orders data",data)
+        return data;
     } catch (error) {
         console.log(error)
     }

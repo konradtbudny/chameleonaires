@@ -46,6 +46,7 @@ async function deleteOrders(id) {
 
 async function getAllOrders() {
     try {
+        console.log("getAllOrders")
         const {rows} = await client.query(`
     SELECT * FROM orders;
     `);
