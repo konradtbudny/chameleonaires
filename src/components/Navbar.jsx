@@ -1,7 +1,9 @@
 import React from "react";
-
 import { Link, useHistory } from "react-router-dom";
-const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
+import useAuth from "../hooks/useAuth";
+
+const Navbar = () => {
+  const { isLoggedIn, setIsLoggedIn } = useAuth();
   let history = useHistory();
 
   return (

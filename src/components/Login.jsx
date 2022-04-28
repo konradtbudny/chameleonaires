@@ -1,8 +1,10 @@
 import { useHistory, Link } from "react-router-dom";
 import React, { useState } from "react";
 import { loginUser } from "../axios-services";
+import useAuth from "../hooks/useAuth";
 
-const Login = ({  setIsLoggedIn }) => {
+const Login = () => {
+  const { setIsLoggedIn } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   let history = useHistory();

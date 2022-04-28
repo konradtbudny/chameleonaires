@@ -38,20 +38,19 @@ const App = () => {
                 <Home APIHealth={APIHealth}/>
             </Route>
             <Route exact path='/login'>
-                <Login setIsLoggedIn={setIsLoggedIn}/>
+                <Login/>
             </Route>
             <Route exact path='/home'>
                 <Home/>
             </Route>
             <Route exact path='/products'>
-                <Products products={products}/>
+                <Products/>
             </Route>
             <Route exact path='/register'>
-                <Register setIsLoggedIn={setIsLoggedIn}/>
+                <Register/>
             </Route>
             <Route exact path='/orders'>
-                <Orders orders={orders}
-                    user={user}/>
+                <Orders/>
             </Route>
         </Switch>
     </div>);

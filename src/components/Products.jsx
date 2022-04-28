@@ -1,6 +1,9 @@
 import React from "react";
 import Product from "./Product";
-const Products = ({ products }) => {
+import useAuth from "../hooks/useAuth";
+
+const Products = () => {
+  const { products } = useAuth();
   return (
     <div>
       {products && products.length
