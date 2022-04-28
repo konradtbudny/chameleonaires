@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { registerUser } from "../axios-services";
 
-const Register = ({ setToken }) => {
+const Register = ({ setToken,setIsLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -14,6 +14,7 @@ const Register = ({ setToken }) => {
         onSubmit={async (e) => {
           e.preventDefault();
           const result = await registerUser(username, password, email);
+          setIsLoggedIn(true);
           history.push("/");
           alert("registered");
         }}

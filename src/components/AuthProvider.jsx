@@ -1,6 +1,6 @@
 import AuthContext from "./AuthContext";
 import React, { useState, useEffect } from "react";
-import { getMe } from "../axios-services";
+import { getMe, getProducts } from "../axios-services";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
@@ -21,9 +21,17 @@ const AuthProvider = ({ children }) => {
     }
     getUser();
   }, [token]);
+  useEffect(()=>{
+    const fetchProducts=async ()=>{
+      const importedProducts=await getProducts();
+      console.log(importedProducts, "Authprovider")
+      setProducts(importedProducts)
+    }
+    fetchProducts()
+  },[])
 
   return (
-    <AuthContext.Provider value={{ user, setUser, token, setToken,isLoggedIn,setIsLoggedIn }}>
+    <AuthContext.Provider value={{ user, setUser, token, setToken,isLoggedIn,setIsLoggedIn,products}}>
       {children}
     </AuthContext.Provider>
   );

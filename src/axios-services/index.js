@@ -66,3 +66,16 @@ export async function getMe(token) {
         console.log(error, "checking object2");
     }
 }
+export async function getProducts(){
+    try {
+        const response =await fetch(`/api/products/`,{
+            method:'GET'
+        });
+
+        const data=await response.json();
+        console.log(data, "axios")
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}

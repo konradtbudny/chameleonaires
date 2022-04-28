@@ -2,7 +2,7 @@ import { useHistory, Link} from "react-router-dom";
 import React, { useState } from "react";
 import { loginUser } from "../axios-services";
 
-const Login = ({ setToken }) => {
+const Login = ({ setToken,setIsLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   let history = useHistory();
@@ -13,6 +13,7 @@ const Login = ({ setToken }) => {
           e.preventDefault();
           const result = await loginUser(username, password);
           localStorage.setItem("token",result.token)
+          setIsLoggedIn(true)
           history.push("/")
         }}
       >

@@ -13,6 +13,30 @@ async function createReview({productId, userId, description}) {
     }
 }
 
+
+async function attachReviewsToProducts(products){
+    const productsToReturn=[...products];
+    const binds=products.map((_,index)=>`$${index+1}`).join(",");
+    const productIds=products.map((product)=>product.id);
+    if(!productIds ?.length)
+        return [];
+    try {
+        const {rows:reviews}=await client.query(`
+        SELECT reviews.*
+        FROM reviews
+        WHERE reviews."productId" IN (${binds});
+        `,productIds)
+        for (const product of productsToReturn)
+        {
+            const reviewsToAdd=reviews.filter((review)=>review.productId===product.id)
+            product.reviews=reviewsToAdd;
+        }
+        return productsToReturn;
+    } catch (error) {
+        throw error
+    }
+}
+
 async function updateReviews({id, description}) {
     try {
         let temp = await getReviewsById(id);
@@ -95,6 +119,6 @@ module.exports = {
     getAllReviews,
     getReviewsByProductId,
     getReviewsByUserId,
-    // attachReviewsToProducts,
+    attachReviewsToProducts,
     // attachReviewsToUsers,
 };

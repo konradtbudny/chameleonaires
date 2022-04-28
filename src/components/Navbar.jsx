@@ -1,15 +1,28 @@
 import React from "react";
-import { Link } from "react-router-dom";
-const Navbar = ({ isLoggedIn,setIsLoggedIn }) => {
+
+import { Link,useHistory } from "react-router-dom";
+const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
+  let history = useHistory();
+
   return (
     <div>
-      {isLoggedIn?(<Link to="/" onClick={()=>{localStorage.removeItem("token");setIsLoggedIn(false)}}><button>Log out</button></Link>):
-      (
-          <Link to="/login">
-        <button>Log in</button>
+      {isLoggedIn ? (
+        <button
+          onClick={() => {
+            localStorage.removeItem("token");
+            setIsLoggedIn(false);
+            history.push("/");
+
+          }}
+        >
+          Log out
+        </button>
+      ) : (
+        <Link to="/login">
+          <button>Log in</button>
         </Link>
       )}
-      
+
       <Link to="/">
         <button>Home</button>
       </Link>

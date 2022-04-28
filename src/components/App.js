@@ -14,7 +14,7 @@ import Register from "./Register"
 import useAuth from '../hooks/useAuth'
 
 const App = () => {
-  const {isLoggedIn,setIsLoggedIn}=useAuth()
+  const {isLoggedIn,setIsLoggedIn,products}=useAuth()
   const [APIHealth, setAPIHealth] = useState("");
 
   useEffect(() => {
@@ -39,16 +39,16 @@ const App = () => {
           <Home APIHealth={APIHealth} />
         </Route>
         <Route exact path='/login'>
-          <Login/>
+          <Login setIsLoggedIn={setIsLoggedIn}/>
         </Route>
         <Route exact path='/home'>
           <Home/>
         </Route>
         <Route exact path='/products'>
-          <Products/>
+          <Products products={products}/>
         </Route>
         <Route exact path='/register'>
-          <Register/>
+          <Register setIsLoggedIn={setIsLoggedIn}/>
         </Route>
       </Switch>
     </div>
