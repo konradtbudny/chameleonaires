@@ -3,7 +3,7 @@ const baseURL = "http://localhost:3000/api"
 
 export async function getAPIHealth() {
     try {
-        const {data} = await axios.get(`${baseURL}/health`); // can use fwtch
+        const {data} = await axios.get(`${baseURL}/health`);
         return data;
     } catch (err) {
         console.log(err, "checking object");
@@ -51,43 +51,33 @@ export async function registerUser(username, password, email) {
 export async function getMe(username) {
     try {
         const response = await fetch(`/api/users/me`, {
-            method:"post",
+            method: "post",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${
                     localStorage.token
                 }`
             },
-            body: JSON.stringify({
-                username
-            })
+            body: JSON.stringify({username})
         });
         const data = await response.json();
         return data;
-    } catch (error) {
-    }
+    } catch (error) {}
 }
-export async function getProducts(){
+export async function getProducts() {
     try {
-        const response =await fetch(`/api/products/`,{
-            method:'GET'
-        });
+        const response = await fetch(`/api/products/`, {method: 'GET'});
 
-        const data=await response.json();
+        const data = await response.json();
         return data
     } catch (error) {
         console.log(error)
     }
 }
-export async function getOrders(id){
+export async function getOrders(id) {
     try {
-        console.log(id,"axios user")
-        const response=await fetch(`/api/orders/${id}`,{
-            method:'GET',
-            
-        })
-        const data=await response.json();
-        console.log(data,"axciios")
+        const response = await fetch(`/api/orders/${id}`, {method: 'GET'})
+        const data = await response.json();
         return data;
     } catch (error) {
         console.log(error)

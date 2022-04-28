@@ -1,14 +1,11 @@
 const express = require("express");
 const ordersRouter = express.Router();
-const {getAllOrders, getOrdersbyId,getUserByUsername,getOrdersByBuyer} = require("../db");
+const {getOrdersbyId, getOrdersByBuyer} = require("../db");
 const {requireUser} = require("./utils");
 
-ordersRouter.get("/:userId", async (req, res,next) => {
+ordersRouter.get("/:userId", async (req, res, next) => {
     try {
-        console.log("reaching orders api",req.params.userId)
         const allOrders = await getOrdersByBuyer(req.params.userId);
-        console.log(allOrders,"api")
-
         res.send(allOrders);
     } catch ({name, message}) {
         next({name, message});

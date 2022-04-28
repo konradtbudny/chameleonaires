@@ -55,7 +55,7 @@ reviewsRouter.delete("/:reviewId", requireUser, async (req, res, next) => {
             const updateReviews = await updateReviews(review.id, {active: false});
 
             res.send({review: updateReview});
-        } else { // if there was a post, throw UnauthorizedUserError, otherwise throw PostNotFoundError
+        } else {
             next(post ? {
                 name: "UnauthorizedUserError",
                 message: "You cannot delete a review which is not yours"

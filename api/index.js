@@ -9,7 +9,6 @@ const reviewsRouter = require("./Reviews");
 const jwt = require("jsonwebtoken");
 const {getUserById} = require("../db");
 const {JWT_SECRET} = process.env;
-const {client} = require("../db/client")
 
 apiRouter.get("/", (req, res, next) => {
     res.send({message: "API is under construction!"});
@@ -23,7 +22,7 @@ apiRouter.use(async (req, res, next) => {
     const prefix = 'Bearer ';
     const auth = req.header('Authorization');
 
-    if (! auth) { // nothing to see here
+    if (! auth) {
         next();
     } else if (auth.startsWith(prefix)) {
         const token = auth.slice(prefix.length);
@@ -51,18 +50,16 @@ apiRouter.use((req, res, next) => {
     next();
 });
 
-// place your routers here
 apiRouter.use("/users", usersRouter);
 apiRouter.use("/products", productsRouter);
 apiRouter.use("/orders", ordersRouter);
 apiRouter.use("/reviews", reviewsRouter);
 apiRouter.use((error, req, res, next) => {
-    console.log(error, "error about status code")
-    const {statusCode} =error
     if (statusCode >= 100 && statusCode < 600) 
         res.status(statusCode);
      else 
         res.status(500);
+    
     res.send({name: error.name, message: error.message});
 });
 

@@ -5,46 +5,53 @@ import { getMe, getOrders, getProducts } from "../axios-services";
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [token, setToken] = useState(null);
-  const [isLoggedIn,setIsLoggedIn]=useState(false)
-  const [products, setProducts]=useState({})
-  const [orders,setOrders]=useState({})
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [products, setProducts] = useState({});
+  const [orders, setOrders] = useState({});
 
   useEffect(() => {
     async function getUser() {
-      const token=localStorage.getItem("token");
+      const token = localStorage.getItem("token");
       if (token) {
-        //check getMe parameter
         const newUser = await getMe(localStorage.username);
         setUser(newUser);
         setToken(token);
-        setIsLoggedIn(true)
-      } 
+        setIsLoggedIn(true);
+      }
     }
     getUser();
   }, [token]);
 
-  useEffect(()=>{
-    const fetchProducts=async ()=>{
-      const importedProducts=await getProducts();
-      setProducts(importedProducts)
-    }
-    fetchProducts()
-  },[])
-  
-  useEffect(()=>{
-    const fetchOrders=async ()=>{
-      console.log(user,"user inauthprovider!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-      if(user.id){
-        const importedOrders=await getOrders(user.id);
-        setOrders(importedOrders)
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const importedProducts = await getProducts();
+      setProducts(importedProducts);
+    };
+    fetchProducts();
+  }, []);
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (user.id) {
+        const importedOrders = await getOrders(user.id);
+        setOrders(importedOrders);
       }
-    }
+    };
     fetchOrders();
-  },[user])
-console.log(orders,"authprovider")
+  }, [user]);
   return (
-    <AuthContext.Provider value={{ user, setUser, token, setToken,isLoggedIn,setIsLoggedIn,products,orders}}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        token,
+        setToken,
+        isLoggedIn,
+        setIsLoggedIn,
+        products,
+        orders,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

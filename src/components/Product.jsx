@@ -1,9 +1,8 @@
 import React from "react";
-const Product = ({product}) => {
-//title, description,price,quantity,category,photo
+const Product = ({ product }) => {
   return (
     <div>
-      <img style={{maxWidth:200, maxHeight:450}} src={product.photo}/>
+      <img style={{ maxWidth: 200, maxHeight: 450 }} src={product.photo} alt={`${product.title}`}/>
       <h1>{product.title}</h1>
       <p>Category: {product.category}</p>
       <p>{product.description}</p>

@@ -1,8 +1,8 @@
-import { useHistory, Link} from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import React, { useState } from "react";
 import { loginUser } from "../axios-services";
 
-const Login = ({ setToken,setIsLoggedIn }) => {
+const Login = ({  setIsLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   let history = useHistory();
@@ -12,10 +12,10 @@ const Login = ({ setToken,setIsLoggedIn }) => {
         onSubmit={async (e) => {
           e.preventDefault();
           const result = await loginUser(username, password);
-          localStorage.setItem("token",result.token)
-          localStorage.setItem("username",username)
-          setIsLoggedIn(true)
-          history.push("/")
+          localStorage.setItem("token", result.token);
+          localStorage.setItem("username", username);
+          setIsLoggedIn(true);
+          history.push("/");
         }}
       >
         <input
@@ -32,9 +32,7 @@ const Login = ({ setToken,setIsLoggedIn }) => {
         ></input>
         <button type="submit"> LOGIN</button>
       </form>
-      <p>
-        Don't have an account?
-      </p>
+      <p>Don't have an account?</p>
       <Link to="/register">
         <button>Register</button>
       </Link>

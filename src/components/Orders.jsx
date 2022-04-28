@@ -1,15 +1,11 @@
 import React from "react";
-import useAuth from '../hooks/useAuth'
+import useAuth from "../hooks/useAuth";
 const Orders = () => {
-const {orders}=useAuth();
+  const { orders } = useAuth();
 
-
-
-  console.log(orders,"front end")
   return (
     <div>
-
-      <p>Orders</p>
+      <p>Orders {orders.id}</p>
     </div>
   );
 };

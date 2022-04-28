@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Link,useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   let history = useHistory();
 
@@ -12,7 +12,6 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
             localStorage.removeItem("token");
             setIsLoggedIn(false);
             history.push("/");
-
           }}
         >
           Log out
@@ -34,11 +33,11 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
           <button>My Orders</button>
         </Link>
       ) : null}
-      {isLoggedIn?(
+      {isLoggedIn ? (
         <Link to="/cart">
           <button>Cart</button>
         </Link>
-      ):null}
+      ) : null}
     </div>
   );
 };

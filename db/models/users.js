@@ -48,9 +48,9 @@ async function getUserByUsername(username) {
 async function getUserById(id) {
     try {
         const {rows: [user]} = await client.query(`SELECT * FROM users WHERE id=$1`, [id]);
-        if (!user) 
+        if (!user) {
             return null;
-        
+        }
         delete user.password;
         delete user.hashedPassword;
         return user;

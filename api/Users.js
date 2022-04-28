@@ -1,6 +1,6 @@
 const express = require("express");
 const usersRouter = express.Router();
-const {getAllUsers, getUserByUsername, createUser, getUserById} = require("../db");
+const {getUserByUsername, createUser, getUserById} = require("../db");
 const {requireUser} = require("./utils");
 const jwt = require("jsonwebtoken");
 const {JWT_SECRET} = process.env;
@@ -17,7 +17,7 @@ usersRouter.post("/login", async (req, res, next) => {
     if (!username || !password) {
         next({name: "MissingCredentialsError", message: "Please supply both a username and password"});
     }
-    
+
     try {
         const user = await getUserByUsername(username);
 
@@ -25,7 +25,7 @@ usersRouter.post("/login", async (req, res, next) => {
             const token = jwt.sign({
                 id: user.id
             }, process.env.JWT_SECRET);
-            res.send({user,message:"you're logged in",token})
+            res.send({user, message: "you're logged in", token})
         } else {
             next({name: "IncorrectCredentialsError", message: "Username or password is incorrect"});
         }
@@ -50,7 +50,7 @@ usersRouter.post('/register', async (req, res, next) => {
                 const token = jwt.sign({
                     id: user.id
                 }, JWT_SECRET, {expiresIn: "1w"});
-  
+
                 res.send({user, message: "you're signed up!", token});
 
             } else {
@@ -71,7 +71,7 @@ usersRouter.delete("/:userId", requireUser, async (req, res, next) => {
             const deactivatedUser = await updateUser(user.id, {active: false});
 
             res.send({user: deactivatedUser});
-        } else { // if there is a user logged in, throw UnauthorizedUserError, otherwise throw UserNotFoundError
+        } else {
             next(post ? {
                 name: "UnauthorizedUserError",
                 message: "You cannot delete a user which is not yours"
@@ -94,7 +94,7 @@ usersRouter.patch("/:userId", requireUser, async (req, res, next) => {
             const reactivatedUser = await updateUser(user.id, {active: true});
 
             res.send({user: reactivatedUser});
-        } else { // if there is a user logged in, throw UnauthorizedUserError, otherwise throw UserNotFoundError
+        } else {
             next(post ? {
                 name: "UnauthorizedUserError",
                 message: "You cannot reactivate a user which is not yours"
@@ -107,8 +107,8 @@ usersRouter.patch("/:userId", requireUser, async (req, res, next) => {
         next({name, message});
     }
 });
-usersRouter.post("/me",requireUser,async(req,res,next)=>{
-    const user=await getUserByUsername(req.body.username);
+usersRouter.post("/me", requireUser, async (req, res, next) => {
+    const user = await getUserByUsername(req.body.username);
     res.send(user)
 })
 module.exports = usersRouter;

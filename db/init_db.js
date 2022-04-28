@@ -1,8 +1,4 @@
-const {
-    client,
-    // declare your model imports here
-    // for example, User
-} = require("./client");
+const {client} = require("./client");
 const {createProduct} = require("./models/products");
 const {createUser} = require("./models/users");
 const {createReview} = require("./models/reviews");
@@ -11,8 +7,6 @@ const {createOrderItem} = require("./models");
 
 async function buildTables() {
     try {
-        // client.connect();
-        // drop tables in correct order
         console.log("Dropping All Tables...");
         await client.query(`
     DROP TABLE IF EXISTS orderItem;
@@ -22,7 +16,6 @@ async function buildTables() {
     DROP TABLE IF EXISTS users CASCADE;
     `);
         console.log("Finished dropping tables!");
-        // build tables in correct order
         await client.query(`CREATE TABLE users(
           id SERIAL PRIMARY KEY,
           username varchar(255) UNIQUE NOT NULL,
@@ -66,9 +59,6 @@ async function buildTables() {
 
 async function populateInitialData() {
     try {
-        // create useful starting data by leveraging your
-        // Model.method() adapters to seed your db, for example:
-        // const user1 = await User.createUser({ ...user info goes here... })
         const user1 = await createUser({username: "Konrad", password: "Budny", email: "kbudny492@gmail.com"})
         const products1 = await createProduct({
             title: "Turtle",
