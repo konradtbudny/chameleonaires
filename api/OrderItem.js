@@ -1,8 +1,28 @@
 const express = require("express");
-const {deleteOrderItem, getOrderItemById} = require("../db/models/orderItem");
 const orderItemRouter = express.Router();
+const {deleteOrderItem, getOrderItemByOrderId} = require("../db");
 const {requireUser} = require("./utils")
 
+orderItemRouter.get("/:id",async(req,res,next)=>{
+    const {id}=req.params;
+    try {
+        const orderItem=await getOrderItemByOrderId(id)
+        res.send(orderItem)
+    } catch ({name,message}) {
+        next({name,message})
+    }
+})
+orderItemRouter.post("/addOrder",requireUser,async(req,res,next)=>{
+    //
+    const {orderId, productId, price, quantity}=req.body;
+    try {
+        const createdOrderItem=createOrderItem(req.body)
+        res.send(createdOrderItem)
+    } catch ({name,message}) {
+        next({name,message})
+    }
+
+})
 orderItemRouter.patch("/:id", requireUser, async (req, res, next) => {
     const {id} = req.params;
     const {price, quantity} = req.body;

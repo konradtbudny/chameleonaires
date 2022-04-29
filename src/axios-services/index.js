@@ -83,3 +83,14 @@ export async function getOrders(id) {
         console.log(error)
     }
 }
+export async function getOrderItem(id) {
+    try {
+        const response = await fetch(`/api/orderitem/${id}`, {method: 'GET'})
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+

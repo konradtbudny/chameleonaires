@@ -5,6 +5,7 @@ const usersRouter = require("./Users");
 const productsRouter = require("./Products");
 const ordersRouter = require("./Orders");
 const reviewsRouter = require("./Reviews");
+const orderItemRouter = require("./OrderItem");
 
 const jwt = require("jsonwebtoken");
 const {getUserById} = require("../db");
@@ -54,13 +55,15 @@ apiRouter.use("/users", usersRouter);
 apiRouter.use("/products", productsRouter);
 apiRouter.use("/orders", ordersRouter);
 apiRouter.use("/reviews", reviewsRouter);
+apiRouter.use("/orderitem",orderItemRouter)
 apiRouter.use((error, req, res, next) => {
+    if(req.statusCode){
     if (statusCode >= 100 && statusCode < 600) 
         res.status(statusCode);
      else 
         res.status(500);
     
-    res.send({name: error.name, message: error.message});
+    res.send({name: error.name, message: error.message});}
 });
 
 module.exports = apiRouter;

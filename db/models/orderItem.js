@@ -2,8 +2,16 @@ const {client} = require("../client");
 
 async function getOrderItemById(id) {
     try {
-        const {row} = await client.query(`SELECT * FROM orderItem WHERE id=$1`, [id,]);
+        const {rows} = await client.query(`SELECT * FROM orderItem WHERE id=$1`, [id,]);
         return row;
+    } catch (error) {
+        throw error;
+    }
+}
+async function getOrderItemByOrderId(id) {
+    try {
+        const {rows} = await client.query(`SELECT * FROM orderItem WHERE "orderId"=$1 `, [id]);
+        return rows;
     } catch (error) {
         throw error;
     }
@@ -50,5 +58,6 @@ module.exports = {
     createOrderItem,
     deleteOrderItem,
     updateOrderItem,
-    getOrderItemById
+    getOrderItemById,
+    getOrderItemByOrderId
 };
