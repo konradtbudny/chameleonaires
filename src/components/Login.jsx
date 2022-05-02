@@ -4,7 +4,7 @@ import { loginUser } from "../axios-services";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-  const { setIsLoggedIn } = useAuth();
+  const { setIsLoggedIn, setToken } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   let history = useHistory();
@@ -17,6 +17,7 @@ const Login = () => {
           localStorage.setItem("token", result.token);
           localStorage.setItem("username", username);
           setIsLoggedIn(true);
+          setToken(result.token);
           history.push("/");
         }}
       >

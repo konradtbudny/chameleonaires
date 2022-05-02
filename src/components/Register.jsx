@@ -8,15 +8,16 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   let history = useHistory();
-  const { setIsLoggedIn } = useAuth();
+  const { setIsLoggedIn, setToken } = useAuth();
 
   return (
     <div>
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          await registerUser(username, password, email);
+          const result = await registerUser(username, password, email);
           setIsLoggedIn(true);
+          setToken(result.token);
           history.push("/");
           alert("registered");
         }}

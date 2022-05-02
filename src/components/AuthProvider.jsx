@@ -7,16 +7,18 @@ const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [products, setProducts] = useState({});
-  const [orders, setOrders] = useState({});
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     async function getUser() {
-      const token = localStorage.getItem("token");
-      if (token) {
+      const localToken = localStorage.getItem("token");
+      if (localToken) {
         const newUser = await getMe(localStorage.username);
         setUser(newUser);
-        setToken(token);
+        setToken(localToken);
         setIsLoggedIn(true);
+      } else {
+        setUser({});
       }
     }
     getUser();
@@ -34,21 +36,20 @@ const AuthProvider = ({ children }) => {
     const fetchOrders = async () => {
       if (user.id) {
         const importedOrders = await getOrders(user.id);
-        console.log(importedOrders, "authprovider")
-        console.log(Array.isArray(importedOrders))
-        let detailsOfOrders=[];
-        importedOrders.map(async (order)=>{
-          const temp= await getOrderItem(order.id)
-          //detailsOfOrders.push(temp)
-          order.products=temp;
-        })
-        console.log(importedOrders.products,"adding orders")
+        importedOrders.map(async (order) => {
+          const temp = await getOrderItem(order.id);
+          if (order.products) {
+            order.products.push(temp);
+          } else {
+            order.products = temp;
+          }
+        });
 
-        setOrders(detailsOfOrders[0]);
+        setOrders(importedOrders);
       }
     };
     fetchOrders();
-  }, [user]);
+  }, [token, isLoggedIn, user]);
   return (
     <AuthContext.Provider
       value={{

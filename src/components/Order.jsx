@@ -1,16 +1,15 @@
 import React from "react";
-const Order = ({ order }) => {
+const Order = ({ singleOrder, orderNumber }) => {
   return (
-      <table>
-          <tbody>
-    <tr>
-        <th>{order.productId}</th>
-        <th>{order.price}</th>
-        <th>{order.quantity}</th>
-      
+    <table key={singleOrder._id}>
+      <tbody>
+        <tr>
+          <th>order #{orderNumber}</th>
+          
+          {/* <th>{singleOrder.products.price}</th> */}
         </tr>
-        </tbody>
-        </table>
+      </tbody>
+    </table>
   );
 };
 export default Order;

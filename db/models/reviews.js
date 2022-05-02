@@ -16,15 +16,14 @@ async function createReview({productId, userId, description}) {
 
 async function attachReviewsToProducts(products) {
     const productsToReturn = [... products];
-    const binds = products.map(
-        (_, index) => `$${
-            index + 1
-        }`
-    ).join(",");
+    const binds = products.map((_, index) => `$${
+        index + 1
+    }`).join(",");
     const productIds = products.map((product) => product.id);
     if (! productIds ?. length) 
         return [];
     
+
     try {
         const {rows: reviews} = await client.query(`
         SELECT reviews.*

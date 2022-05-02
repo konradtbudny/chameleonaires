@@ -99,8 +99,9 @@ async function populateInitialData() {
 
         const orderItem1 = await createOrderItem({orderId: order1.id, productId: products1.id, price: products1.price, quantity: 3})
         const orderItem2 = await createOrderItem({orderId: order2.id, productId: products2.id, price: products2.price, quantity: 1})
-        const orderItem3 = await createOrderItem({orderId: order3.id, productId: products3.id, price: products2.price, quantity: 2})
-        const orderItem4 = await createOrderItem({orderId: order1.id, productId: products3.id, price: products2.price, quantity: 1})
+        const orderItem3 = await createOrderItem({orderId: order3.id, productId: products3.id, price: products3.price, quantity: 2})
+        const orderItem4 = await createOrderItem({orderId: order1.id, productId: products3.id, price: products3.price, quantity: 1})
+        const orderItem5 = await createOrderItem({orderId: order4.id, productId: products3.id, price: products3.price, quantity: 1})
     } catch (error) {
         throw error;
     }

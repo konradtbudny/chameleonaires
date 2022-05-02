@@ -1,8 +1,8 @@
 const {client} = require("../client");
 const {getProductById} = require("./products");
 
-async function createOrders({buyersId,active}) {
-    active=active?active:false;
+async function createOrders({buyersId, active}) {
+    active = active ? active : false;
     try {
         const {rows: [newOrder]} = await client.query(`
       INSERT INTO orders("buyersId", active)
@@ -60,7 +60,6 @@ async function getOrdersByBuyer(buyersId) {
     SELECT * FROM orders
     WHERE "buyersId"=$1
     `, [buyersId]);
-        console.log(rows, "DB")
         return rows;
     } catch (error) {
         throw error;
