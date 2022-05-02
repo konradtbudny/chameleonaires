@@ -3,9 +3,9 @@ import Order from "./Order";
 import useAuth from "../hooks/useAuth";
 const Orders = () => {
   const { orders } = useAuth();
-    console.log(orders[0]);
+    console.log(orders);
     if(orders[0]){
-    console.log(orders[0].id)
+    console.log(orders)
 
   return (
     <div>

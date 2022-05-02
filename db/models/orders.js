@@ -1,30 +1,31 @@
 const {client} = require("../client");
 const {getProductById} = require("./products");
 
-async function createOrders({buyersId, productId}) {
+async function createOrders({buyersId,active}) {
+    active=active?active:false;
     try {
         const {rows: [newOrder]} = await client.query(`
-      INSERT INTO orders("buyersId", "productId")
+      INSERT INTO orders("buyersId", active)
       VALUES($1,$2)
       RETURNING *;
-      `, [buyersId, productId]);
+      `, [buyersId, active]);
         return newOrder;
     } catch (error) {
         throw error;
     }
 }
 
-async function updateOrders({id, buyersId, productId}) {
+async function updateOrders({id, buyersId, active}) {
     try {
         let temp = await getProductById(id);
         buyersId = buyersId ? buyersId : temp.buyersId;
-        productId = productId ? productId : temp.productId;
+        active = active ? active : temp.active;
         const {rows: [updated]} = await client.query(`
   UPDATE orders
-  SET "buyersId"=$1, "productId"=$2
+  SET "buyersId"=$1, active=$2
   WHERE id=$3
   RETURNING *;
-  `, [buyersId, productId, id]);
+  `, [buyersId, active, id]);
         return updated;
     } catch (error) {
         throw error;
@@ -55,23 +56,12 @@ async function getAllOrders() {
 
 async function getOrdersByBuyer(buyersId) {
     try {
-        const {rows: [buyerOrderS]} = await client.query(`
+        const {rows} = await client.query(`
     SELECT * FROM orders
     WHERE "buyersId"=$1
     `, [buyersId]);
-        return buyerOrderS;
-    } catch (error) {
-        throw error;
-    }
-}
-
-async function getOrdersByProduct(productId) {
-    try {
-        const {rows: [productOrders]} = await client.query(`
-    SELECT * FROM orders
-    WHERE "productId"=$1
-    `, [productId]);
-        return productOrders;
+        console.log(rows, "DB")
+        return rows;
     } catch (error) {
         throw error;
     }
@@ -95,6 +85,5 @@ module.exports = {
     deleteOrders,
     getAllOrders,
     getOrdersByBuyer,
-    getOrdersByProduct,
     getOrdersbyId
 };

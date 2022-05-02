@@ -78,6 +78,7 @@ export async function getOrders(id) {
     try {
         const response = await fetch(`/api/orders/${id}`, {method: 'GET'})
         const data = await response.json();
+        console.log(data,"axios")
         return data;
     } catch (error) {
         console.log(error)
