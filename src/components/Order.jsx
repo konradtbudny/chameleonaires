@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { getOrderItem } from "../axios-services";
 import useAuth from "../hooks/useAuth";
 /* make a local state that holds info for products 
@@ -8,38 +8,40 @@ pull products from hook
 search for specific products
 */
 const Order = ({ singleOrder, orderNumber }) => {
-  const [productList, setProductList]=useState([])
-  const {products}=useAuth();
-  console.log(products)
+  const [productList, setProductList] = useState([]);
+  const { products } = useAuth();
   useEffect(() => {
     const gettingData = async () => {
       const data = await getOrderItem(singleOrder.id);
-
-      setProductList(data)
+      data.map((orderDetails) => {
+        const productDetails = products.filter(
+          (product) => product.id === orderDetails.productId
+        );
+        orderDetails.name = productDetails[0].title;
+        orderDetails.price = productDetails[0].price * orderDetails.quantity;
+      });
+      setProductList(data);
     };
     gettingData();
-  }, []);
-  console.log(productList,"data")
+  },[products,singleOrder.id]);
+
+  let k = 1;
   return (
     <table key={singleOrder._id}>
       <tbody>
-          <td></td>
         <tr>
           <th>order #{orderNumber}</th>
-          
-          {/* <th>{productList[0].id}</th> */}
         </tr>
-        <tr>
-        {productList?(
-            productList.map((singleProduct,i)=>{
-              return (<tr>
-                <th>id: {singleProduct.productId}</th>
-                <th>price: {singleProduct.price}</th>
-                <th>quantity: {singleProduct.quantity}</th>
-              </tr>)
-            })
-          ):null}
-        </tr>
+          {productList
+            ? productList.map((singleProduct, i) => (
+                  <tr key={i}>
+                    <th>{k++})</th>
+                    <th>Product name: {singleProduct.name}</th>
+                    <th>Price: {singleProduct.price}</th>
+                    <th>Quantity: {singleProduct.quantity}</th>
+                  </tr>
+  ))
+            : null}
       </tbody>
     </table>
   );

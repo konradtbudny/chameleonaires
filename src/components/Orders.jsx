@@ -2,8 +2,8 @@ import React from "react";
 import Order from "./Order";
 import useAuth from "../hooks/useAuth";
 const Orders = () => {
-  const { orders,products } = useAuth();
-  
+  const { orders } = useAuth();
+
   if (orders) {
     let k = 1;
 

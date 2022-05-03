@@ -11,15 +11,10 @@ import Register from "./Register"
 import Orders from "./Orders";
 
 import useAuth from '../hooks/useAuth'
+import Cart from "./Cart";
 
 const App = () => {
-    const {
-        user,
-        isLoggedIn,
-        setIsLoggedIn,
-        products,
-        orders
-    } = useAuth()
+    const {isLoggedIn, setIsLoggedIn} = useAuth()
     const [APIHealth, setAPIHealth] = useState("");
 
     useEffect(() => {
@@ -51,6 +46,9 @@ const App = () => {
             </Route>
             <Route exact path='/orders'>
                 <Orders/>
+            </Route>
+            <Route exact path='/Cart'>
+                <Cart/>
             </Route>
         </Switch>
     </div>);

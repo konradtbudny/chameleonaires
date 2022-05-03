@@ -39,7 +39,6 @@ async function getUserByUsername(username) {
         if (!user) {
             return null;
         }
-        console.log(user)
         return user;
     } catch (error) {
         throw error;

@@ -10,14 +10,7 @@ productsRouter.get("/", async (req, res, next) => {
         next(error);
     }
 });
-productsRouter.get("/:id",async (req,res,next)=>{
-    try {
-        const product=await getProductById(req.params.id)
-        res.send(product)
-    } catch (error) {
-        next(error)
-    }
-})
+
 productsRouter.post("/", async (req, res, next) => {
     try {
         const {
