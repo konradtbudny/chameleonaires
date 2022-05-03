@@ -3,6 +3,9 @@ import Order from "./Order";
 import useAuth from "../hooks/useAuth";
 const Orders = () => {
   const { orders } = useAuth();
+  
+  console.log(orders)
+
   if (orders) {
     let k = 1;
 

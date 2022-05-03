@@ -4,6 +4,7 @@ const {getUserByUsername, createUser, getUserById} = require("../db");
 const {requireUser} = require("./utils");
 const jwt = require("jsonwebtoken");
 const {JWT_SECRET} = process.env;
+const bcrypt = require("bcrypt");
 require("dotenv").config()
 
 usersRouter.use((req, res, next) => {
@@ -17,11 +18,12 @@ usersRouter.post("/login", async (req, res, next) => {
     if (!username || !password) {
         next({name: "MissingCredentialsError", message: "Please supply both a username and password"});
     }
-
+    
     try {
         const user = await getUserByUsername(username);
+        const compare=await bcrypt.compare(password,user.password)
 
-        if (user && user.password == password) {
+        if (user && compare) {
             const token = jwt.sign({
                 id: user.id
             }, process.env.JWT_SECRET);

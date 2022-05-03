@@ -38,13 +38,8 @@ const AuthProvider = ({ children }) => {
         const importedOrders = await getOrders(user.id);
         importedOrders.map(async (order) => {
           const temp = await getOrderItem(order.id);
-          if (order.products) {
-            order.products.push(temp);
-          } else {
-            order.products = temp;
-          }
+          order.products=temp
         });
-
         setOrders(importedOrders);
       }
     };

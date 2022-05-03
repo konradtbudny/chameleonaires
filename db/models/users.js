@@ -22,7 +22,7 @@ async function createUser({username, password, email}) {
       VALUES($1,$2,$3)
       ON CONFLICT (username) DO NOTHING
       RETURNING *;
-      `, [username, password, email]);
+      `, [username, hashedPassword, email]);
         delete user.hashedPassword;
         delete user.password;
         return user;
@@ -39,6 +39,7 @@ async function getUserByUsername(username) {
         if (!user) {
             return null;
         }
+        console.log(user)
         return user;
     } catch (error) {
         throw error;
