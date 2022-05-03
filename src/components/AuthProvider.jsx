@@ -40,6 +40,7 @@ const AuthProvider = ({ children }) => {
           const temp = await getOrderItem(order.id);
           order.products=temp
         });
+        
         setOrders(importedOrders);
       }
     };

@@ -53,7 +53,9 @@ async function deleteOrderItem(id) {
         throw error;
     }
 }
-
+async function attachItemsToOrder(orders){
+    const ordersToReturn=[...orders]
+}
 module.exports = {
     createOrderItem,
     deleteOrderItem,

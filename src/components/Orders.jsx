@@ -2,16 +2,14 @@ import React from "react";
 import Order from "./Order";
 import useAuth from "../hooks/useAuth";
 const Orders = () => {
-  const { orders } = useAuth();
+  const { orders,products } = useAuth();
   
-  console.log(orders)
-
   if (orders) {
     let k = 1;
 
     return (
       <div>
-        <p>Hi </p>
+        <h1>My orders</h1>
         {orders && orders.length
           ? orders.map((singleOrder, i) => {
               return (
