@@ -1,17 +1,8 @@
 const express = require("express");
 const orderItemRouter = express.Router();
-const {deleteOrderItem, getOrderItemByOrderId} = require("../db");
+const {deleteOrderItem, getOrderItemByOrderId,updateOrderItem} = require("../db/models/orderItem");
 const {requireUser} = require("./utils")
-
-orderItemRouter.get("/:id",async(req,res,next)=>{
-    const {id}=req.params;
-    try {
-        const orderItem=await getOrderItemByOrderId(id)
-        res.send(orderItem)
-    } catch ({name,message}) {
-        next({name,message})
-    }
-})
+console.log("getting into orderitem api")
 orderItemRouter.post("/addOrder",requireUser,async(req,res,next)=>{
     //
     const {orderId, productId, price, quantity}=req.body;
@@ -21,10 +12,12 @@ orderItemRouter.post("/addOrder",requireUser,async(req,res,next)=>{
     } catch ({name,message}) {
         next({name,message})
     }
-
+    
 })
-orderItemRouter.patch("/:id", requireUser, async (req, res, next) => {
+orderItemRouter.patch("/update/:id", async (req, res, next) => {
+    console.log(req.body,"message, api")
     const {id} = req.params;
+    console.log(id)
     const {price, quantity} = req.body;
     let data = {};
     data.id = id;
@@ -36,13 +29,20 @@ orderItemRouter.patch("/:id", requireUser, async (req, res, next) => {
     }
     try {
         const updated = await updateOrderItem(data);
+        console.log(updated, 'updated')
+        if(updated){
         res.send(updated);
+    }
+    else{
+        next({name:`update  ${id}`,message:"failed update"})
+    }
     } catch ({name, message}) {
         next({name, message});
     }
 })
-orderItemRouter.delete("/:id", requireUser, async (req, res, next) => {
+orderItemRouter.delete("/:id", async (req, res, next) => {
     const {id} = req.params
+    console.log(id)
     try {
         const order = await deleteOrderItem(id)
         res.send(order);
@@ -51,4 +51,13 @@ orderItemRouter.delete("/:id", requireUser, async (req, res, next) => {
     }
 })
 
+orderItemRouter.get("/:id",async(req,res,next)=>{
+    const {id}=req.params;
+    try {
+        const orderItem=await getOrderItemByOrderId(id)
+        res.send(orderItem)
+    } catch ({name,message}) {
+        next({name,message})
+    }
+})
 module.exports = orderItemRouter;

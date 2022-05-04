@@ -44,7 +44,7 @@ async function updateReviews({id, description}) {
     try {
         let temp = await getReviewsById(id);
         description = description ? description : temp.description;
-        const {row: [updated]} = await client.query(`
+        const {rows: [updated]} = await client.query(`
   UPDATE reviews
   SET description=$1
   WHERE id=$2
