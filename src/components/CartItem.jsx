@@ -28,6 +28,7 @@ const CartItem = ({ singleProduct }) => {
           if (quantity > 0) {
             setQuantity(quantity - 1);
             setPrice(singleProductPrice[0] * (quantity - 1));
+            updateOrderItem(singleProduct.id,singleProductPrice[0] * (quantity - 1),quantity-1)
           }
           let input = document.getElementById("quantity");
           input.value--;
@@ -40,11 +41,13 @@ const CartItem = ({ singleProduct }) => {
         onClick={() => {
           setQuantity(quantity + 1);
           setPrice(singleProductPrice[0] * (quantity + 1));
-          updateOrderItem(singleProduct.id,price,quantity+1)
+          updateOrderItem(singleProduct.id,(singleProductPrice[0] * (quantity + 1)),quantity+1)
         }}
       >
         +
       </button>
+      <p></p>
+      <button>Delete item</button>
     </div>
   );
 };

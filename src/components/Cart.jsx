@@ -32,7 +32,10 @@ const Cart = () => {
       {orderProducts
         ? orderProducts.map((singleProduct, i) => {
             return (
-              <CartItem key={`Cart item: ${i}`} singleProduct={singleProduct} />
+                <CartItem
+                  key={`Cart item: ${i}`}
+                  singleProduct={singleProduct}
+                />
             );
           })
         : null}
