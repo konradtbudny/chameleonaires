@@ -30,6 +30,7 @@ async function createOrderItem({orderId, productId, price, quantity}) {
     }
 }
 async function updateOrderItem({id, price, quantity}) {
+    console.log("!!!!!!!!!!!!!!!!!! in updateOrderItem")
     try {
         let temp = getOrderItemById(id);
         price = price ? price : temp.price;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
+import { updateOrderItem } from "../axios-services";
 const CartItem = ({ singleProduct }) => {
   const { products } = useAuth();
   const singleProductPrice = products
@@ -39,6 +40,7 @@ const CartItem = ({ singleProduct }) => {
         onClick={() => {
           setQuantity(quantity + 1);
           setPrice(singleProductPrice[0] * (quantity + 1));
+          updateOrderItem(singleProduct.id,price,quantity+1)
         }}
       >
         +

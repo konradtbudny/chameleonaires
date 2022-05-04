@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "http://localhost:3000/api"
+const baseURL = "http://localhost:4000/api"
 
 export async function getAPIHealth() {
     try {
@@ -50,7 +50,7 @@ export async function registerUser(username, password, email) {
 
 export async function getMe(username) {
     try {
-        const response = await fetch(`/api/users/me`, {
+        const response = await fetch(`${baseURL}/users/me`, {
             method: "post",
             headers: {
                 "Content-Type": "application/json",
@@ -66,7 +66,7 @@ export async function getMe(username) {
 }
 export async function getProducts() {
     try {
-        const response = await fetch(`/api/products/`, {method: 'GET'});
+        const response = await fetch(`${baseURL}/products/`, {method: 'GET'});
 
         const data = await response.json();
         return data
@@ -76,7 +76,7 @@ export async function getProducts() {
 }
 export async function getOrders(id) {
     try {
-        const response = await fetch(`/api/orders/${id}`, {method: 'GET'})
+        const response = await fetch(`${baseURL}/orders/${id}`, {method: 'GET'})
         const data = await response.json();
         return data;
     } catch (error) {
@@ -85,8 +85,26 @@ export async function getOrders(id) {
 }
 export async function getOrderItem(id) {
     try {
-        const response = await fetch(`/api/orderitem/${id}`, {method: 'GET'})
+        const response = await fetch(`${baseURL}/orderitem/${id}`, {method: 'GET'})
         const data = await response.json();
+        return data;
+    } catch (error) {
+        console.log(error)
+    }
+}
+export async function updateOrderItem(id, price,quantity){
+    try {
+        console.log(id,price,quantity, "axios")
+        const response = await fetch(`${baseURL}/orderitem/update/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({price,quantity})
+        });
+        console.log(response,"response")
+        const data = await response.json();
+        console.log(data)
         return data;
     } catch (error) {
         console.log(error)

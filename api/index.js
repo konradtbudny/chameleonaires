@@ -11,9 +11,9 @@ const jwt = require("jsonwebtoken");
 const {getUserById} = require("../db");
 const {JWT_SECRET} = process.env;
 
-apiRouter.get("/", (req, res, next) => {
-    res.send({message: "API is under construction!"});
-});
+// apiRouter.get("/", (req, res, next) => {
+//     res.send({message: "API is under construction!"});
+// });
 
 apiRouter.get("/health", (req, res, next) => {
     res.send({healthy: true});
@@ -55,7 +55,9 @@ apiRouter.use("/users", usersRouter);
 apiRouter.use("/products", productsRouter);
 apiRouter.use("/orders", ordersRouter);
 apiRouter.use("/reviews", reviewsRouter);
+console.log("api index line 57")
 apiRouter.use("/orderitem",orderItemRouter)
+
 apiRouter.use((error, req, res, next) => {
     if(req.statusCode){
     if (statusCode >= 100 && statusCode < 600) 
