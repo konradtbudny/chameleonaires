@@ -12,7 +12,7 @@ const Navbar = () => {
         <button
           onClick={() => {
             localStorage.removeItem("token");
-            localStorage.removeItem("username")
+            localStorage.removeItem("username");
             setIsLoggedIn(false);
             history.push("/");
           }}

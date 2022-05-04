@@ -6,5 +6,6 @@ export { default as Register } from "./Register";
 export {default as Products} from "./Products"
 export {default as Product} from "./Product"
 export {default as Cart} from "./Cart"
+export {default as CartItem} from "./CartItem"
 export {default as Orders} from "./Orders"
 export {default as Order} from "./Order"

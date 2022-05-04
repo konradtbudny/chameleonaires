@@ -6,7 +6,7 @@ import useAuth from "../hooks/useAuth";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword,setConfirmPassword]=useState("")
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   let history = useHistory();
   const { setIsLoggedIn, setToken } = useAuth();
@@ -16,15 +16,14 @@ const Register = () => {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          if(password===confirmPassword){
-          const result = await registerUser(username, password, email);
-          setIsLoggedIn(true);
-          setToken(result.token);
-          history.push("/");
-          alert("registered");
-          }
-          else{
-            alert("Check password")
+          if (password === confirmPassword) {
+            const result = await registerUser(username, password, email);
+            setIsLoggedIn(true);
+            setToken(result.token);
+            history.push("/");
+            alert("registered");
+          } else {
+            alert("Check password");
           }
         }}
       >
@@ -41,11 +40,11 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
         ></input>
         <input
-        type="password"
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChange={(e)=>setConfirmPassword(e.target.value)}>
-        </input>
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        ></input>
         <input
           type="text"
           placeholder="E-mail"
