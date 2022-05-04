@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      if (user.id) {
+      if (user && user.id) {
         const importedOrders = await getOrders(user.id);
         if(importedOrders&&importedOrders.length){
           importedOrders.map(async (order) => {

@@ -14,9 +14,10 @@ orderItemRouter.post("/addOrder",requireUser,async(req,res,next)=>{
     }
     
 })
-orderItemRouter.patch("/update/:id", requireUser, async (req, res, next) => {
+orderItemRouter.patch("/update/:id", async (req, res, next) => {
     console.log(req.body,"message, api")
     const {id} = req.params;
+    console.log(id)
     const {price, quantity} = req.body;
     let data = {};
     data.id = id;
@@ -28,6 +29,7 @@ orderItemRouter.patch("/update/:id", requireUser, async (req, res, next) => {
     }
     try {
         const updated = await updateOrderItem(data);
+        console.log(updated, 'updated')
         if(updated){
         res.send(updated);
     }
