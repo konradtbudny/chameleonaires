@@ -9,6 +9,7 @@ import Login from "./Login"
 import Products from "./Products"
 import Register from "./Register"
 import Orders from "./Orders";
+import View from "./View"
 
 import useAuth from '../hooks/useAuth'
 import Cart from "./Cart";
@@ -49,6 +50,9 @@ const App = () => {
             </Route>
             <Route exact path='/Cart'>
                 <Cart/>
+            </Route>
+            <Route path='/products/:id'>
+                <View/>
             </Route>
         </Switch>
     </div>);
