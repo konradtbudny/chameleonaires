@@ -74,6 +74,15 @@ export async function getProducts() {
         console.log(error)
     }
 }
+export async function getProductById(id){
+    try {
+        const response = await fetch(`${baseURL}/products/${id}`,{method:'GET'});
+        const data =await response.json();
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
 export async function getOrders(id) {
     try {
         const response = await fetch(`${baseURL}/orders/${id}`, {method: 'GET'})
