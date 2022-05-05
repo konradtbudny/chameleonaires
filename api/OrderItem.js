@@ -1,13 +1,14 @@
 const express = require("express");
 const orderItemRouter = express.Router();
-const {deleteOrderItem, getOrderItemByOrderId,updateOrderItem} = require("../db/models/orderItem");
+const {deleteOrderItem, getOrderItemByOrderId,updateOrderItem,createOrderItem} = require("../db/models/orderItem");
 const {requireUser} = require("./utils")
 console.log("getting into orderitem api")
-orderItemRouter.post("/addOrder",requireUser,async(req,res,next)=>{
+orderItemRouter.post("/addOrder",async(req,res,next)=>{
     //
     const {orderId, productId, price, quantity}=req.body;
+    console.log(req.body,"req.body")
     try {
-        const createdOrderItem=createOrderItem(req.body)
+        const createdOrderItem=createOrderItem(orderId,productId,price,quantity)
         res.send(createdOrderItem)
     } catch ({name,message}) {
         next({name,message})

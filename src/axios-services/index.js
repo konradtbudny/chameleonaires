@@ -92,9 +92,26 @@ export async function getOrderItem(id) {
         console.log(error)
     }
 }
+export async function addOrderItem(orderId, productId, price, quantity){
+    console.log("getting into axio")
+    try {
+        const response=await fetch(`${baseURL}/orderitem/addOrder`,{
+            method:'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body:JSON.stringify({orderId, productId, price, quantity})
+        })
+        console.log(response,"response")
+        const data=await response.json();
+        console.log(data,"data")
+        return data;
+    } catch (error) {
+        console.log(error)
+    }
+}
 export async function updateOrderItem(id, price,quantity){
     try {
-        console.log(id,price,quantity, "axios")
         const response = await fetch(`${baseURL}/orderitem/update/${id}`, {
             method: "PATCH",
             headers: {
@@ -102,9 +119,7 @@ export async function updateOrderItem(id, price,quantity){
             },
             body: JSON.stringify({price,quantity})
         });
-        console.log(response,"response")
         const data = await response.json();
-        console.log(data)
         return data;
     } catch (error) {
         console.log(error)

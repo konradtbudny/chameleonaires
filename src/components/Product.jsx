@@ -1,5 +1,7 @@
 import React from "react";
-const Product = ({ product }) => {
+import { addOrderItem } from "../axios-services";
+const Product = ({ product,activeOrder }) => {
+  console.log(activeOrder,"activeOrder component")
   return (
     <div>
       <img
@@ -11,7 +13,12 @@ const Product = ({ product }) => {
       <p>Category: {product.category}</p>
       <p>{product.description}</p>
       <p>Price: {product.price}</p>
-      <p>Currently in stock: {product.price}</p>
+      <p>Currently in stock: {product.quantity}</p>
+      <button onClick={()=>{
+        addOrderItem(activeOrder[0].id,product.id,product.price,1);
+        
+        
+        alert("added")}}>Add to cart</button>
     </div>
   );
 };
