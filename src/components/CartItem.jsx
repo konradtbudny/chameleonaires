@@ -21,6 +21,7 @@ const CartItem = ({ singleProduct, setOrderProducts, orderProducts }) => {
     settingData();
   }, [singleProduct]);
   let productNumber = 1;
+  let maxQuantityToBuy=products.filter((product)=>(product.id===singleProduct.productId)).map((product)=>{return product.quantity})
   return (
     <div key={`single order item: ${productNumber++}`}>
       <h2>{singleProduct.name}</h2>
@@ -45,14 +46,21 @@ const CartItem = ({ singleProduct, setOrderProducts, orderProducts }) => {
       <label id="quantity">{quantity}</label>
       <button
         onClick={() => {
-          setQuantity(quantity + 1);
+          if(quantity<maxQuantityToBuy[0]){
+            setQuantity(quantity + 1);
           setPrice(singleProductPrice[0] * (quantity + 1));
           updateOrderItem(
             singleProduct.id,
             singleProductPrice[0] * (quantity + 1),
             quantity + 1
-          );
-        }}
+          )
+          }
+          else{
+            alert("Max item reached. No more at stock")
+          }
+          
+        }
+      }
       >
         +
       </button>

@@ -22,7 +22,8 @@ async function getOrderItemByOrderId(id) {
     throw error;
   }
 }
-async function createOrderItem({ orderId, productId, price, quantity }) {
+async function createOrderItem( orderId, productId, price, quantity ) {
+  console.log("getting into db")
   try {
     const {
       rows: [orderItem],
