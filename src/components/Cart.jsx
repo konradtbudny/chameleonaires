@@ -24,7 +24,7 @@ const Cart = () => {
       }
     };
     gettingData();
-  }, [orders]);
+  }, [orders,products]);
 
   return (
     <div>

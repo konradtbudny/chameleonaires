@@ -1,7 +1,6 @@
 import React,{ useState,useEffect } from "react";
 import Product from "./Product";
 import useAuth from "../hooks/useAuth";
-import { getOrderItem } from "../axios-services";
 
 const Products = () => {
   const { products,orders} = useAuth();

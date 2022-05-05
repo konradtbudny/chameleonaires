@@ -92,32 +92,36 @@ export async function getOrderItem(id) {
         console.log(error)
     }
 }
-export async function addOrderItem(orderId, productId, price, quantity){
+export async function addOrderItem(orderId, productId, price, quantity) {
     console.log("getting into axio")
     try {
-        const response=await fetch(`${baseURL}/orderitem/addOrder`,{
-            method:'POST',
+        const response = await fetch(`${baseURL}/orderitem/addOrder`, {
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
-            body:JSON.stringify({orderId, productId, price, quantity})
+            body: JSON.stringify(
+                {orderId, productId, price, quantity}
+            )
         })
-        console.log(response,"response")
-        const data=await response.json();
-        console.log(data,"data")
+        console.log(response, "response")
+        const data = await response.json();
+        console.log(data, "data")
         return data;
     } catch (error) {
         console.log(error)
     }
 }
-export async function updateOrderItem(id, price,quantity){
+export async function updateOrderItem(id, price, quantity) {
     try {
         const response = await fetch(`${baseURL}/orderitem/update/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({price,quantity})
+            body: JSON.stringify(
+                {price, quantity}
+            )
         });
         const data = await response.json();
         return data;
@@ -125,11 +129,11 @@ export async function updateOrderItem(id, price,quantity){
         console.log(error)
     }
 }
-export async function deleteOrderItem(id){
+export async function deleteOrderItem(id) {
     try {
-        const response=await fetch(`${baseURL}/orderitem/delete/${id}`,{
-            method:'DELETE'
-        })
+        const response = await fetch(`${baseURL}/orderitem/delete/${id}`, {method: 'DELETE'})
+        const data = await response.json()
+        return data;
     } catch (error) {
         console.log(error)
     }
