@@ -110,3 +110,12 @@ export async function updateOrderItem(id, price,quantity){
         console.log(error)
     }
 }
+export async function deleteOrderItem(id){
+    try {
+        const response=await fetch(`${baseURL}/orderitem/delete/${id}`,{
+            method:'DELETE'
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
