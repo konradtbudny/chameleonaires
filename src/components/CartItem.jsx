@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import useAuth from "../hooks/useAuth";
-import { updateOrderItem } from "../axios-services";
-const CartItem = ({ singleProduct }) => {
+import { updateOrderItem, deleteOrderItem } from "../axios-services";
+
+const CartItem = ({ singleProduct, setOrderProducts, orderProducts }) => {
   const { products } = useAuth();
+
   const singleProductPrice = products
     .filter((product) => product.id === singleProduct.productId)
     .map((product) => {
@@ -28,7 +30,11 @@ const CartItem = ({ singleProduct }) => {
           if (quantity > 0) {
             setQuantity(quantity - 1);
             setPrice(singleProductPrice[0] * (quantity - 1));
-            updateOrderItem(singleProduct.id,singleProductPrice[0] * (quantity - 1),quantity-1)
+            updateOrderItem(
+              singleProduct.id,
+              singleProductPrice[0] * (quantity - 1),
+              quantity - 1
+            );
           }
           let input = document.getElementById("quantity");
           input.value--;
@@ -41,13 +47,32 @@ const CartItem = ({ singleProduct }) => {
         onClick={() => {
           setQuantity(quantity + 1);
           setPrice(singleProductPrice[0] * (quantity + 1));
-          updateOrderItem(singleProduct.id,(singleProductPrice[0] * (quantity + 1)),quantity+1)
+          updateOrderItem(
+            singleProduct.id,
+            singleProductPrice[0] * (quantity + 1),
+            quantity + 1
+          );
         }}
       >
         +
       </button>
       <p></p>
-      <button>Delete item</button>
+      <button
+        onClick={() => {
+          deleteOrderItem(singleProduct.id);
+
+          const filteredCart = orderProducts.filter((product) => {
+            if (singleProduct.id !== product.id) {
+              return true;
+            } else {
+              return false;
+            }
+          })
+          setOrderProducts(filteredCart)
+        }}
+      >
+        Delete item from cart
+      </button>
     </div>
   );
 };

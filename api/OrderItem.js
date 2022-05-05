@@ -40,7 +40,7 @@ orderItemRouter.patch("/update/:id", async (req, res, next) => {
         next({name, message});
     }
 })
-orderItemRouter.delete("/:id", async (req, res, next) => {
+orderItemRouter.delete("/delete/:id", async (req, res, next) => {
     const {id} = req.params
     console.log(id)
     try {

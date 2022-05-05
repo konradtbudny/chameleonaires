@@ -9,7 +9,7 @@ const Cart = () => {
   useEffect(() => {
     const gettingData = async () => {
       if (orders && orders.length) {
-        const activeOrder = await orders
+        const activeOrder =  orders
           .filter((order) => order.active === true)
           .map((order) => order.id);
         const data = await getOrderItem(activeOrder);
@@ -35,6 +35,8 @@ const Cart = () => {
                 <CartItem
                   key={`Cart item: ${i}`}
                   singleProduct={singleProduct}
+                  setOrderProducts={setOrderProducts}
+                  orderProducts={orderProducts}
                 />
             );
           })
